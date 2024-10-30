@@ -8,9 +8,9 @@ Please notify other teammates when you start editing
 ![Check your branch](https://github.com/TBSKBJustin/Zepheria_Beta/blob/Experiment/GitHubResource/Choose%20the%20branch.png)
     We should have a different Branch for each assignment
 3. Click "Fetch Origin" to check the update
+
     ![Fetch Origin](https://github.com/TBSKBJustin/Zepheria_Beta/blob/Experiment/GitHubResource/Fetch%20Origin.png)
 4. If an update is detected, click "Pull Origin" to apply the changes to the local
-
 ![Pull Origin](https://github.com/TBSKBJustin/Zepheria_Beta/blob/Experiment/GitHubResource/Pull%20Origin.png)
 5. Start to work on the project
 6. After finishing work, the GitHub Desktop should show the new changes
