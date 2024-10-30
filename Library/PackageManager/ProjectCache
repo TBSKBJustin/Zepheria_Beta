@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638659097803065219
-    m_Hash: 688594366
+      ticks: 638659103532526762
+    m_Hash: 3398224090
   m_LockFileStatus:
     m_FilePath: D:/School/CST-320/Unity/Zepheria_Beta/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638659097803145385
-    m_Hash: 4157841021
+      ticks: 638659103532526762
+    m_Hash: 2488647435
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
