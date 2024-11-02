@@ -17,9 +17,21 @@ public class FadeScreen : MonoBehaviour
         rend = GetComponent<Renderer>();
         rend.enabled = false;
 
+        // 确保材质的渲染模式为 Transparent
+        Material material = rend.material;
+        material.SetOverrideTag("RenderType", "Transparent");
+        material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        material.SetInt("_ZWrite", 0);
+        material.DisableKeyword("_ALPHATEST_ON");
+        material.EnableKeyword("_ALPHABLEND_ON");
+        material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        material.renderQueue = 3000;
+
         if (fadeOnStart)
             FadeIn();
     }
+
 
     public void FadeIn()
     {

@@ -24,9 +24,9 @@ public class SceneTransitionManager : MonoBehaviour
     IEnumerator GoToSceneRoutine(int sceneIndex)
     {
         fadeScreen.FadeOut();
-        yield return new WaitForSeconds(fadeScreen.fadeDuration);
+        yield return new WaitForSeconds(fadeScreen.fadeDuration); // 等待渐变完成
 
-        //Launch the new scene
+        // 启动新场景
         SceneManager.LoadScene(sceneIndex);
     }
 
