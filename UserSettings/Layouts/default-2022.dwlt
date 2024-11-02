@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1694.2223
     height: 857.3333
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Hierarchy
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 371}
   m_MaxSize: {x: 10000, y: 10000}
@@ -467,9 +467,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 02680000
-      m_LastClickedID: 0
-      m_ExpandedIDs: 6af5ffffccf6ffffd4f8ffff2afbffff
+      m_SelectedIDs: aa6a0000
+      m_LastClickedID: 27306
+      m_ExpandedIDs: d2eeffff2afbffffa86a0000aa6a0000bc6a0000c46a0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -862,9 +862,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.8071316, y: 0.8624496, z: -1.3764021}
+    m_Target: {x: -1.5362626, y: 2.8248296, z: -1.4712654}
     speed: 2
-    m_Value: {x: -0.8071316, y: 0.8624496, z: -1.3764021}
+    m_Value: {x: -1.5362626, y: 2.8248296, z: -1.4712654}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -910,9 +910,9 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.053914066, y: -0.13710432, z: 0.007561113, w: -0.98890674}
+    m_Target: {x: -0.24403162, y: -0.13753693, z: 0.03504141, w: -0.9591582}
     speed: 2
-    m_Value: {x: -0.053922206, y: -0.13712502, z: 0.007562255, w: -0.98905605}
+    m_Value: {x: -0.24409397, y: -0.13691933, z: 0.034884293, w: -0.9594031}
   m_Size:
     m_Target: 0.24423608
     speed: 2
@@ -1058,7 +1058,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Materials
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1066,15 +1066,15 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Materials
   m_LastFoldersGridSize: 16
   m_LastProjectPath: D:\School\CST_320\Zepheria_Beta
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 120}
-    m_SelectedIDs: c4670000
-    m_LastClickedID: 26564
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: b6670000
+    m_LastClickedID: 26550
     m_ExpandedIDs: 000000006267000064670000666700006867000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1134,15 +1134,15 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: c6230000000000008a860000928600008e8600004064000042640000ee7f000006720000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: TestScene
-      m_OriginalName: TestScene
+      m_Name: 1 Start Scene
+      m_OriginalName: 1 Start Scene
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 26626
+      m_UserData: 26866
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0
