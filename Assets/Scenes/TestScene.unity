@@ -4596,6 +4596,7 @@ GameObject:
   - component: {fileID: 1999140818}
   - component: {fileID: 1999140817}
   - component: {fileID: 1999140816}
+  - component: {fileID: 1999140819}
   m_Layer: 5
   m_Name: Scrollbar
   m_TagString: Untagged
@@ -4710,6 +4711,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1999140814}
   m_CullTransparentMesh: 1
+--- !u!114 &1999140819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999140814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf637a8c52854106a69dc38cd0d3e32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetCamera: {fileID: 134443292}
+  zoomScrollbar: {fileID: 1999140816}
+  minZoom: 20
+  maxZoom: 60
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
