@@ -4,79 +4,91 @@ using UnityEngine;
 
 public class SlimeBehaviorTest : MonoBehaviour
 {
-    public float detectionRadius = 5f;       // Distance within which the slime starts bouncing
-    public float bounceHeight = 0.5f;        // Height of each bounce
-    public float bounceSpeed = 2f;           // Speed of bounce
-    public Color grabbedColor = Color.red;   // Color to change when grabbed
-    public SlimeTally tally; // Reference to the Talley to update the slime count UI
+     public float detectionRadius = 5f; // Distance to detect the player
+    public float bounceHeight = 0.5f;  // Height of each bounce
+    public float bounceSpeed = 2f;     // Speed of bounce
+    public AudioClip bounceSound;      // Sound for bouncing
+    public AudioClip grabSound;        // Sound for grabbing
+    public float fadeDuration = 1f;    // Time it takes for the slime to fade away
 
     private bool isNearPlayer = false;
     private bool isGrabbed = false;
-    private bool hasBounced = false;         // Track whether it has bounced
+    private bool hasBounced = false;   // Track whether it has bounced
     private Vector3 originalPosition;
     private Renderer slimeRenderer;
-    private Color originalColor;
+    private AudioSource audioSource;
 
     void Start()
     {
         originalPosition = transform.position;
 
-        // Attempt to get Renderer component from self or children
         slimeRenderer = GetComponent<Renderer>() ?? GetComponentInChildren<Renderer>();
-
-        if (slimeRenderer != null)
+        if (slimeRenderer == null)
         {
-            originalColor = slimeRenderer.material.color;
+            Debug.LogWarning("No Renderer found on the slime. Ensure it has a Renderer component.");
         }
-        else
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
         {
-            Debug.LogWarning("No Renderer found on the slime or its children. Ensure it has a Renderer component.");
+            audioSource = gameObject.AddComponent<AudioSource>();
         }
     }
 
     void Update()
     {
-        if (slimeRenderer == null) return; // Stop if no Renderer found
+        if (slimeRenderer == null) return;
 
-        // Check if player is within detection radius and it hasn’t bounced yet
-        isNearPlayer = Vector3.Distance(transform.position, PlayerPosition()) <= detectionRadius;
-
-        if (isNearPlayer && !hasBounced && !isGrabbed)
+        // Check if Camera.main exists to get player position
+        if (Camera.main == null)
         {
-            StartCoroutine(Bounce());
+            Debug.LogWarning("No Camera found. Ensure the scene has a main camera tagged as 'MainCamera'.");
+            return;
         }
 
-        // Detect VR trigger press to grab slime
-        if (isNearPlayer && !isGrabbed && Input.GetButtonDown("VRTrigger")) // Ensure "VRTrigger" matches your VR setup input
+        Vector3 playerPosition = Camera.main.transform.position;
+
+        // Log for debugging player and slime position
+        Debug.Log("Player Position: " + playerPosition);
+        Debug.Log("Slime Position: " + transform.position);
+
+        // Detect player within radius
+        float distance = Vector3.Distance(transform.position, playerPosition);
+        Debug.Log("Distance to player: " + distance);
+
+        isNearPlayer = distance <= detectionRadius;
+
+        // If the player is within range, start bouncing
+        if (isNearPlayer && !hasBounced && !isGrabbed)
         {
-            OnGrab();
+            Debug.Log("Player detected within range. Starting bounce.");
+            StartCoroutine(Bounce());
         }
     }
 
     private IEnumerator Bounce()
     {
-        hasBounced = true; // Set the bounce state to true, so it won't bounce repeatedly while player is nearby
+        hasBounced = true;
 
-        // Get the terrain height at the slime's current position
-        float terrainHeight = Terrain.activeTerrain.SampleHeight(transform.position);
-
-        // Calculate bounce positions for the two bounces
-        Vector3 firstBounce = new Vector3(originalPosition.x, terrainHeight + bounceHeight, originalPosition.z);
-        Vector3 secondBounce = new Vector3(originalPosition.x, terrainHeight + (bounceHeight * 0.75f), originalPosition.z);
+        // Play bounce sound
+        if (bounceSound != null)
+        {
+            audioSource.PlayOneShot(bounceSound);
+        }
 
         // First bounce
+        Vector3 firstBounce = new Vector3(originalPosition.x, originalPosition.y + bounceHeight, originalPosition.z);
         yield return MoveToPosition(originalPosition, firstBounce, 0.25f);
         yield return MoveToPosition(firstBounce, originalPosition, 0.25f);
 
         // Second, smaller bounce
+        Vector3 secondBounce = new Vector3(originalPosition.x, originalPosition.y + (bounceHeight * 0.75f), originalPosition.z);
         yield return MoveToPosition(originalPosition, secondBounce, 0.2f);
         yield return MoveToPosition(secondBounce, originalPosition, 0.2f);
 
-        // Reset bounce state so it can bounce again if the player re-enters the radius
         hasBounced = false;
     }
 
-    // Helper coroutine to move the slime between two positions over a duration
     private IEnumerator MoveToPosition(Vector3 startPosition, Vector3 endPosition, float duration)
     {
         float elapsedTime = 0f;
@@ -86,61 +98,53 @@ public class SlimeBehaviorTest : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        transform.position = endPosition; // Ensure it reaches the exact end position
+        transform.position = endPosition;
     }
 
-    // Simulate player position (replace with actual player position in your game)
-    Vector3 PlayerPosition()
+    private void OnTriggerEnter(Collider other)
     {
-        // Use your VR player's actual position here
-        return Camera.main.transform.position;
+        if (isGrabbed) return;
+
+        // No need for specific hand detection, only check if grabbed by any object
+        if (other.CompareTag("PlayerHand"))
+        {
+            OnGrab();
+        }
     }
 
-    // This method should be called by the grabbing system in your VR setup
     public void OnGrab()
     {
-        if (slimeRenderer != null)
+        if (isGrabbed) return;
+
+        isGrabbed = true;
+
+        // Play grab sound
+        if (grabSound != null)
         {
-            isGrabbed = true;
-            hasBounced = true; // Stop bouncing once grabbed
-            slimeRenderer.material.color = grabbedColor;
-            Debug.Log("Slime grabbed!");
-
-            // Start fading out and incrementing the slime count
-            StartCoroutine(FadeAndIncrement());
-        }
-    }
-
-    // Coroutine to gradually fade out the slime and increment the count
-    private IEnumerator FadeAndIncrement()
-    {
-        Color color = slimeRenderer.material.color;
-        float fadeDuration = 1.0f;
-        float fadeSpeed = 1.0f / fadeDuration;
-        float alpha = color.a;
-
-        // Fade-out loop to decrease opacity over time
-        while (alpha > 0)
-        {
-            alpha -= Time.deltaTime * fadeSpeed;
-            slimeRenderer.material.color = new Color(color.r, color.g, color.b, alpha);
-            yield return null;
+            audioSource.PlayOneShot(grabSound);
         }
 
-        // Increment slime count in the UI once faded
-        tally.IncrementSlimeCount();
-        gameObject.SetActive(false); // Deactivate or destroy the slime after fading out
+        // Fade and destroy
+        StartCoroutine(FadeAndDestroy());
     }
 
-    // Call this method when the player releases the slime
-    public void OnRelease()
+    private IEnumerator FadeAndDestroy()
     {
         if (slimeRenderer != null)
         {
-            isGrabbed = false;
-            hasBounced = false; // Allow bouncing again when released
-            slimeRenderer.material.color = originalColor;
-            Debug.Log("Slime released!");
+            Material material = slimeRenderer.material;
+            Color originalColor = material.color;
+
+            float elapsedTime = 0f;
+            while (elapsedTime < fadeDuration)
+            {
+                float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
+                material.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
         }
+
+        Destroy(gameObject);
     }
 }
