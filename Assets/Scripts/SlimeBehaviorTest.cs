@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SlimeBehaviorTest : MonoBehaviour
 {
-     public float detectionRadius = 5f; // Distance to detect the player
+    public GameObject player;          // Field to assign the player GameObject in the Inspector
+    public float detectionRadius = 5f; // Distance to detect the player
     public float bounceHeight = 0.5f;  // Height of each bounce
     public float bounceSpeed = 2f;     // Speed of bounce
     public AudioClip bounceSound;      // Sound for bouncing
@@ -37,16 +38,9 @@ public class SlimeBehaviorTest : MonoBehaviour
 
     void Update()
     {
-        if (slimeRenderer == null) return;
+        if (slimeRenderer == null || player == null) return;
 
-        // Check if Camera.main exists to get player position
-        if (Camera.main == null)
-        {
-            Debug.LogWarning("No Camera found. Ensure the scene has a main camera tagged as 'MainCamera'.");
-            return;
-        }
-
-        Vector3 playerPosition = Camera.main.transform.position;
+        Vector3 playerPosition = player.transform.position;
 
         // Log for debugging player and slime position
         Debug.Log("Player Position: " + playerPosition);
