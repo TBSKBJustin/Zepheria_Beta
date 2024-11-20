@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7099655024501674457}
   - component: {fileID: 7609004674109839987}
-  - component: {fileID: 6540111436499299967}
   m_Layer: 0
   m_Name: Slime_03 Sprout
   m_TagString: Untagged
@@ -57,24 +56,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6540111436499299967
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7099655024501674456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 945e3cd1d7024412cbc2ac5cd12a4dde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRadius: 7
-  bounceHeight: 0.5
-  bounceSpeed: 2
-  bounceSound: {fileID: 8300000, guid: 3484db857d07c43a3bcaf49f5e46a1fd, type: 3}
-  grabSound: {fileID: 8300000, guid: 4e30c6bb5dc814c1a97e8720317e89ab, type: 3}
-  fadeDuration: 1
 --- !u!1 &7099655024573255015
 GameObject:
   m_ObjectHideFlags: 0

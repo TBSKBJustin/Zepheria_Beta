@@ -4,129 +4,116 @@ using UnityEngine;
 
 public class SlimeBehavior : MonoBehaviour
 {
-  public float detectionRadius = 5f;  // Distance within which the slime starts bouncing
-    public float bounceHeight = 0.5f;   // Height of each bounce
-    public float bounceSpeed = 2f;      // Speed of bounce
-    public Color grabbedColor = Color.red; // Color to change when grabbed
+    [Header("Bounce Settings")]
+    public float bounceHeight = 0.5f; // How high the slime bounces
+    public float bounceSpeed = 2.0f; // How fast the slime bounces
+    private float bounceTimer = 0.0f;
 
-    private bool isNearPlayer = false;
-    private bool isGrabbed = false;
-    private bool hasBounced = false; // Track whether it has bounced
-    private Vector3 originalPosition;
-    private Renderer slimeRenderer;
-    private Color originalColor;
+    [Header("Detection Settings")]
+    public float activationRange = 5.0f; // Distance within which the slime activates
+    public Transform player; // Drag the XR Rig or Main Camera here
+
+    [Header("Sound Settings")]
+    public AudioClip bounceSound;
+    private AudioSource audioSource;
+
+    private bool isPlayerInRange = false;
+    private bool isBouncing = false;
+
+    private Vector3 groundPosition;
 
     void Start()
     {
-        originalPosition = transform.position;
+        // Store the initial ground position for bounce calculations
+        groundPosition = transform.position;
 
-        // Attempt to get Renderer component from self or children
-        slimeRenderer = GetComponent<Renderer>() ?? GetComponentInChildren<Renderer>();
+        // Add an AudioSource component if not already present
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
 
-        if (slimeRenderer != null)
-        {
-            originalColor = slimeRenderer.material.color;
-        }
-        else
-        {
-            Debug.LogWarning("No Renderer found on the slime or its children. Ensure it has a Renderer component.");
-        }
+        // Assign the bounce sound
+        audioSource.clip = bounceSound;
+        audioSource.playOnAwake = false;
+        audioSource.loop = true; // Keep playing the sound while bouncing
     }
 
     void Update()
     {
-        if (slimeRenderer == null) return; // Stop if no Renderer found
-
-        // Check if player is within detection radius and it hasn’t bounced yet
-        isNearPlayer = Vector3.Distance(transform.position, PlayerPosition()) <= detectionRadius;
-
-        if (isNearPlayer && !hasBounced && !isGrabbed)
+        if (player == null)
         {
-            StartCoroutine(Bounce());
+            Debug.LogWarning("Player Transform is not assigned to the SlimeBehavior script.");
+            return;
         }
 
-        // Check if the player clicks on the slime to grab it
-        if (Input.GetMouseButtonDown(0) && !isGrabbed)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+        // Track the actual player's position
+        Vector3 playerPosition = player.position;
 
-            if (Physics.Raycast(ray, out hit) && hit.transform == transform)
+        // Calculate the distance between the player and the slime
+        float distanceToPlayer = Vector3.Distance(playerPosition, groundPosition);
+
+        // Debugging output for distance
+        Debug.Log($"Distance to Player: {distanceToPlayer}");
+
+        // Check if the player is within range
+        if (distanceToPlayer <= activationRange)
+        {
+            if (!isPlayerInRange)
             {
-                OnGrab();
+                isPlayerInRange = true;
+                StartBouncing();
+            }
+
+            // Perform the bounce animation if bouncing is active
+            if (isBouncing)
+            {
+                bounceTimer += Time.deltaTime * bounceSpeed;
+                float bounceOffset = Mathf.Sin(bounceTimer) * bounceHeight;
+                transform.position = new Vector3(groundPosition.x, groundPosition.y + Mathf.Abs(bounceOffset), groundPosition.z);
             }
         }
-        // Release the slime when the player clicks again
-        else if (Input.GetMouseButtonDown(0) && isGrabbed)
+        else
         {
-            OnRelease();
+            if (isPlayerInRange)
+            {
+                isPlayerInRange = false;
+                StopBouncing();
+            }
         }
     }
 
-    private IEnumerator Bounce()
-{
-    hasBounced = true; // Set the bounce state to true, so it won't bounce repeatedly while player is nearby
-
-    // Get the terrain height at the slime's current position
-    float terrainHeight = Terrain.activeTerrain.SampleHeight(transform.position);
-
-    // Calculate bounce positions for the two bounces
-    Vector3 firstBounce = new Vector3(originalPosition.x, terrainHeight + bounceHeight, originalPosition.z);
-    Vector3 secondBounce = new Vector3(originalPosition.x, terrainHeight + (bounceHeight * 0.75f), originalPosition.z);
-
-    // First bounce
-    yield return MoveToPosition(originalPosition, firstBounce, 0.25f);
-    yield return MoveToPosition(firstBounce, originalPosition, 0.25f);
-
-    // Second, smaller bounce
-    yield return MoveToPosition(originalPosition, secondBounce, 0.2f);
-    yield return MoveToPosition(secondBounce, originalPosition, 0.2f);
-
-    // Reset bounce state so it can bounce again if the player re-enters the radius
-    hasBounced = false;
-}
-
-    // Helper coroutine to move the slime between two positions over a duration
-    private IEnumerator MoveToPosition(Vector3 startPosition, Vector3 endPosition, float duration)
+    private void StartBouncing()
     {
-        float elapsedTime = 0f;
-        while (elapsedTime < duration)
+        isBouncing = true;
+        bounceTimer = 0.0f; // Reset the bounce timer to sync the bounce
+        if (audioSource && !audioSource.isPlaying)
         {
-            transform.position = Vector3.Lerp(startPosition, endPosition, elapsedTime / duration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            audioSource.Play();
         }
-        transform.position = endPosition; // Ensure it reaches the exact end position
+
+        Debug.Log("Player entered range. Slime started bouncing.");
     }
 
-    // Simulate player position (replace with actual player position in your game)
-    Vector3 PlayerPosition()
+    private void StopBouncing()
     {
-        // Use your VR player's actual position here
-        return Camera.main.transform.position;
+        isBouncing = false;
+        if (audioSource && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+
+        // Reset position to the original ground state
+        transform.position = groundPosition;
+
+        Debug.Log("Player left range. Slime stopped bouncing.");
     }
 
-    // This method should be called by the grabbing system in your VR setup
-    public void OnGrab()
+    private void OnDrawGizmosSelected()
     {
-        if (slimeRenderer != null)
-        {
-            isGrabbed = true;
-            hasBounced = true; // Stop bouncing once grabbed
-            slimeRenderer.material.color = grabbedColor;
-            Debug.Log("Slime grabbed!");
-        }
-    }
-
-    // Call this method when the player releases the slime
-    public void OnRelease()
-    {
-        if (slimeRenderer != null)
-        {
-            isGrabbed = false;
-            hasBounced = false; // Allow bouncing again when released
-            slimeRenderer.material.color = originalColor;
-            Debug.Log("Slime released!");
-        }
+        // Draw a sphere in the editor to visualize the activation range
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, activationRange);
     }
 }
