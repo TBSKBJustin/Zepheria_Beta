@@ -1,25 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SlimeBehavior : MonoBehaviour
 {
-    [Header("Bounce Settings")]
     public float bounceHeight = 0.5f; // How high the slime bounces
-    public float bounceSpeed = 2.0f; // How fast the slime bounces
-    private float bounceTimer = 0.0f;
-
-    [Header("Detection Settings")]
     public float activationRange = 5.0f; // Distance within which the slime activates
     public Transform player; // Drag the XR Rig or Main Camera here
 
-    [Header("Sound Settings")]
-    public AudioClip bounceSound;
+    public AudioClip bounceSound; // Sound effect for bouncing
     private AudioSource audioSource;
 
-    private bool isPlayerInRange = false;
-    private bool isBouncing = false;
-
+    private bool hasBounced = false; // Ensure the slime only bounces once
     private Vector3 groundPosition;
 
     void Start()
@@ -37,7 +28,6 @@ public class SlimeBehavior : MonoBehaviour
         // Assign the bounce sound
         audioSource.clip = bounceSound;
         audioSource.playOnAwake = false;
-        audioSource.loop = true; // Keep playing the sound while bouncing
     }
 
     void Update()
@@ -54,60 +44,47 @@ public class SlimeBehavior : MonoBehaviour
         // Calculate the distance between the player and the slime
         float distanceToPlayer = Vector3.Distance(playerPosition, groundPosition);
 
-        // Debugging output for distance
-        Debug.Log($"Distance to Player: {distanceToPlayer}");
-
-        // Check if the player is within range
-        if (distanceToPlayer <= activationRange)
+        // Trigger the bounce if within range and hasn't already bounced
+        if (distanceToPlayer <= activationRange && !hasBounced)
         {
-            if (!isPlayerInRange)
-            {
-                isPlayerInRange = true;
-                StartBouncing();
-            }
-
-            // Perform the bounce animation if bouncing is active
-            if (isBouncing)
-            {
-                bounceTimer += Time.deltaTime * bounceSpeed;
-                float bounceOffset = Mathf.Sin(bounceTimer) * bounceHeight;
-                transform.position = new Vector3(groundPosition.x, groundPosition.y + Mathf.Abs(bounceOffset), groundPosition.z);
-            }
-        }
-        else
-        {
-            if (isPlayerInRange)
-            {
-                isPlayerInRange = false;
-                StopBouncing();
-            }
+            hasBounced = true;
+            StartCoroutine(BounceOnce());
         }
     }
 
-    private void StartBouncing()
+    private IEnumerator BounceOnce()
     {
-        isBouncing = true;
-        bounceTimer = 0.0f; // Reset the bounce timer to sync the bounce
-        if (audioSource && !audioSource.isPlaying)
+        Debug.Log("Player detected. Slime is bouncing once.");
+
+        // Play bounce sound
+        if (bounceSound != null)
         {
             audioSource.Play();
         }
 
-        Debug.Log("Player entered range. Slime started bouncing.");
-    }
+        // Bounce up
+        Vector3 targetPosition = new Vector3(groundPosition.x, groundPosition.y + bounceHeight, groundPosition.z);
+        float duration = 0.25f; // Duration of the bounce
+        float elapsedTime = 0f;
 
-    private void StopBouncing()
-    {
-        isBouncing = false;
-        if (audioSource && audioSource.isPlaying)
+        while (elapsedTime < duration)
         {
-            audioSource.Stop();
+            transform.position = Vector3.Lerp(groundPosition, targetPosition, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
 
-        // Reset position to the original ground state
-        transform.position = groundPosition;
+        // Return to the ground
+        elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            transform.position = Vector3.Lerp(targetPosition, groundPosition, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
 
-        Debug.Log("Player left range. Slime stopped bouncing.");
+        transform.position = groundPosition;
+        Debug.Log("Bounce complete.");
     }
 
     private void OnDrawGizmosSelected()
