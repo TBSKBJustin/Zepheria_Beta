@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public int level = 3;
     public int health = 40;
@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadPlayer()
     {
-        PlayerData = SaveSystem.LoadPlayer();
+        PlayerData data = SaveSystem.LoadPlayer();
 
         level = data.level;
         health = data.health;
