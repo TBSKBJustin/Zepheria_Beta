@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PanelSwitcher : MonoBehaviour
 {
@@ -48,4 +49,11 @@ public class PanelSwitcher : MonoBehaviour
         if (MainPanel != null)
             MainPanel.SetActive(true);
     }
+
+    public void QuitToMainMenu()
+    {
+        Debug.Log("Returning to Start Scene...");
+        SceneManager.LoadScene("StartScene"); // Replace "StartScene" with the actual name of your Start Scene
+    }
+
 }

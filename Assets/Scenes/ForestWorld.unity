@@ -3539,6 +3539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainPanel: {fileID: 1412122935}
   OptionsPanel: {fileID: 1522964432}
+  AboutPanel: {fileID: 0}
 --- !u!114 &724708710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7754,6 +7755,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2084416424}
+  - {fileID: 1973055066}
   m_Father: {fileID: 1417959686}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1903381164
@@ -8503,8 +8505,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1973055066}
+  m_Children: []
   m_Father: {fileID: 2084416424}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1973055065
@@ -8533,12 +8534,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973055065}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 8.29, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.1276002, z: 0}
   m_LocalScale: {x: 1, y: 0.01, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1944526281}
+  m_Father: {fileID: 1903381163}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1973055067
 MeshRenderer:

@@ -180,7 +180,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 447
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -321,8 +321,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1932023901}
+  m_Children: []
   m_Father: {fileID: 1942619732}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &13802637
@@ -2804,7 +2803,7 @@ GameObject:
   - component: {fileID: 187838320}
   - component: {fileID: 187838319}
   m_Layer: 7
-  m_Name: QuitButton
+  m_Name: QuitToMainButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2853,7 +2852,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.7830189, g: 0.34349412, b: 0.74269533, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -2874,9 +2873,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1591161260}
-        m_TargetAssemblyTypeName: QuitGame, Assembly-CSharp
-        m_MethodName: Quit
+      - m_Target: {fileID: 1591161262}
+        m_TargetAssemblyTypeName: PanelSwitcher, Assembly-CSharp
+        m_MethodName: QuitToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11133,7 +11132,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Quit Game
+  m_text: Quit to Main Menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -15508,6 +15507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainPanel: {fileID: 1490649017}
   OptionsPanel: {fileID: 938890111}
+  AboutPanel: {fileID: 0}
 --- !u!1 &1591794305
 GameObject:
   m_ObjectHideFlags: 0
@@ -16761,7 +16761,7 @@ GameObject:
   - component: {fileID: 1800870825}
   - component: {fileID: 1800870824}
   - component: {fileID: 1800870823}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Top (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17089,7 +17089,7 @@ GameObject:
   - component: {fileID: 1829667186}
   - component: {fileID: 1829667185}
   - component: {fileID: 1829667184}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17199,7 +17199,7 @@ GameObject:
   - component: {fileID: 1834695714}
   - component: {fileID: 1834695713}
   - component: {fileID: 1834695712}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Top (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17757,7 +17757,7 @@ GameObject:
   - component: {fileID: 1851496645}
   - component: {fileID: 1851496644}
   - component: {fileID: 1851496643}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Top (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18337,12 +18337,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1932023900}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.962, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.9620004, z: 0}
   m_LocalScale: {x: 1, y: 0.01, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8725116}
+  m_Father: {fileID: 1942619732}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1932023902
 MeshRenderer:
@@ -18427,6 +18427,7 @@ Transform:
   - {fileID: 8725116}
   - {fileID: 1511470981}
   - {fileID: 20482287}
+  - {fileID: 1932023901}
   m_Father: {fileID: 1546646436}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1949214493
@@ -19404,7 +19405,7 @@ GameObject:
   - component: {fileID: 2030257945}
   - component: {fileID: 2030257944}
   - component: {fileID: 2030257943}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
