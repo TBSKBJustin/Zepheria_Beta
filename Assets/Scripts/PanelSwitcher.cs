@@ -6,6 +6,7 @@ public class PanelSwitcher : MonoBehaviour
     [Header("UI Panels")]
     public GameObject MainPanel;
     public GameObject OptionsPanel;
+    public GameObject AboutPanel;
 
     void Start()
     {
@@ -25,6 +26,17 @@ public class PanelSwitcher : MonoBehaviour
 
         if (OptionsPanel != null)
             OptionsPanel.SetActive(true);
+    }
+    public void ShowAboutPanel()
+    {
+        if (MainPanel != null)
+            MainPanel.SetActive(false);
+
+        if (OptionsPanel != null)
+            OptionsPanel.SetActive(false);
+
+        if (AboutPanel != null)
+            AboutPanel.SetActive(true);
     }
 
     // Show the MainPanel and hide the OptionsPanel
