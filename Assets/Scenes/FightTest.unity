@@ -5700,6 +5700,7 @@ MonoBehaviour:
   animator: {fileID: 1471812971}
   attackInterval: 2
   weaknessTrigger: {fileID: 1327516728}
+  maxHealth: 100
 --- !u!1 &1542246940 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5686134208185362930, guid: 1fd3a7c43c8190f4d8c167ebde694364, type: 3}

@@ -20,10 +20,13 @@ public class EnemyCombatController : MonoBehaviour
     };
 
     public GameObject weaknessTrigger; // 破绽的攻击球体 Trigger
+    public int maxHealth = 100; // 怪物的最大血量
+    private int currentHealth; // 当前血量
 
     void Start()
     {
         weaknessTrigger?.SetActive(false); // 确保破绽 Trigger 默认关闭
+        currentHealth = maxHealth; // 初始化血量
     }
 
     void PerformAttack()
@@ -97,6 +100,7 @@ public class EnemyCombatController : MonoBehaviour
             weaknessTrigger?.SetActive(false); // 隐藏破绽 Trigger
             inWeaknessState = false;
             animator.speed = 1f; // 恢复动画速度
+            TakeDamage(20);
         }
     }
 
@@ -116,5 +120,25 @@ public class EnemyCombatController : MonoBehaviour
             attackActionIndex = 0;
             attackCount = 0; // 重置攻击计数
         }
+    }
+
+    void TakeDamage(int damage)
+    {
+        currentHealth -= damage; // 减少血量
+        Debug.Log($"Enemy Health: {currentHealth}/{maxHealth}");
+
+        if (currentHealth <= 0)
+        {
+            Die(); // 血量降为零时触发死亡
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log("Enemy Died!");
+        CancelInvoke(); // 停止所有攻击逻辑
+        animator.SetTrigger("dead"); // 播放死亡动画
+        isBattleStarted = false; // 停止战斗状态
+        weaknessTrigger?.SetActive(false); // 确保弱点 Trigger 隐藏
     }
 }
