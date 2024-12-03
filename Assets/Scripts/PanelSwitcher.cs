@@ -3,30 +3,36 @@ using UnityEngine;
 public class PanelSwitcher : MonoBehaviour
 {
     // References to the panels
+    [Header("UI Panels")]
     public GameObject MainPanel;
     public GameObject OptionsPanel;
 
     void Start()
     {
-        // Ensure the OptionsPanel is disabled at the start
+        // Ensure only the MainPanel is visible at the start
+        if (MainPanel != null)
+            MainPanel.SetActive(true);
+
         if (OptionsPanel != null)
             OptionsPanel.SetActive(false);
     }
 
-    // Called when the "Options" button is clicked
+    // Show the OptionsPanel and hide the MainPanel
     public void ShowOptionsPanel()
     {
         if (MainPanel != null)
             MainPanel.SetActive(false);
+
         if (OptionsPanel != null)
             OptionsPanel.SetActive(true);
     }
 
-    // Called when the "Back" button is clicked
+    // Show the MainPanel and hide the OptionsPanel
     public void ShowMainPanel()
     {
         if (OptionsPanel != null)
             OptionsPanel.SetActive(false);
+
         if (MainPanel != null)
             MainPanel.SetActive(true);
     }
