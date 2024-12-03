@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class BattleTrigger : MonoBehaviour
 {
-    private bool battleStarted = false; // 确保战斗只触发一次
-    public EnemyCombatController enemyController; // 引用敌人行为脚本
+    private bool battleStarted = false;
+    public EnemyCombatController enemyController;
+
+    public GameObject rightTrigger;
+    public GameObject leftTrigger;
+    public GameObject enterBattleTrigger;
 
     void OnTriggerEnter(Collider other)
     {
@@ -18,12 +22,14 @@ public class BattleTrigger : MonoBehaviour
 
     void StartBattle()
     {
-        // 1. 切换玩家为战斗模式
+        rightTrigger.SetActive(true);
+        leftTrigger.SetActive(true);
+
         FindObjectOfType<CombatMode>().EnterCombatMode();
 
-        // 2. 启动敌人行为
         enemyController.StartBattle();
 
         Debug.Log("Battle Started!");
+        enterBattleTrigger.SetActive(false);
     }
 }

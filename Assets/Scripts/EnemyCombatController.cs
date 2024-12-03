@@ -91,7 +91,7 @@ public class EnemyCombatController : MonoBehaviour
 
         // 破绽动画
         int attackAction = attackCombinations[attackSet][attackActionIndex];
-        animator.speed = 0.5f; // 动画减速
+        animator.speed = 0.2f; // 动画减速
         animator.SetTrigger($"attack{attackAction}");
         Debug.Log($"Enemy performed weakness attack: {attackAction}");
 
@@ -104,7 +104,7 @@ public class EnemyCombatController : MonoBehaviour
         StartCoroutine(FadeInWeaknessBall());
 
         // 如果玩家未攻击破绽，2 秒后返回普通循环
-        Invoke(nameof(EndWeaknessState), 2f);
+        Invoke(nameof(EndWeaknessState), 3f);
     }
     IEnumerator FadeInWeaknessBall()
     {
