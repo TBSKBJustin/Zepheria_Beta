@@ -12,6 +12,9 @@ public class EnemyCombatController : MonoBehaviour
     private int attackSet = 0; // 当前的攻击组合
     private int attackActionIndex = 0; // 当前攻击组合中的动作索引
 
+    public DodgeTrigger leftTrigger;  // 引用左边躲闪触发器
+    public DodgeTrigger rightTrigger; // 引用右边躲闪触发器
+
     private readonly int[][] attackCombinations = new int[][]
     {
         new int[] { 1, 2, 3 }, // 组合 1
@@ -22,11 +25,21 @@ public class EnemyCombatController : MonoBehaviour
     public GameObject weaknessTrigger; // 破绽的攻击球体 Trigger
     public int maxHealth = 100; // 怪物的最大血量
     private int currentHealth; // 当前血量
+    private Material weaknessMaterial;
+
+    private readonly Vector3[] weaknessPositions = new Vector3[]
+    {
+        new Vector3(0.7f, 1.5f, -0.6f), // 组合 1, 2, 3 的位置
+        new Vector3(0.5f, 1.3f, -0.6f), // 组合 2, 3, 1 的位置
+        new Vector3(0.28f, 1.3f, -0.4f) // 组合 3, 1, 2 的位置
+    };
 
     void Start()
     {
         weaknessTrigger?.SetActive(false); // 确保破绽 Trigger 默认关闭
         currentHealth = maxHealth; // 初始化血量
+        weaknessMaterial = weaknessTrigger.GetComponent<Renderer>().material; // 获取材质
+        SetMaterialTransparency(0); // 初始化为完全透明
     }
 
     void PerformAttack()
@@ -45,6 +58,8 @@ public class EnemyCombatController : MonoBehaviour
             int attackAction = attackCombinations[attackSet][attackActionIndex];
             animator.SetTrigger($"attack{attackAction}");
             Debug.Log($"Enemy performed attack: {attackAction} | Attack Count: {attackCount + 1}");
+
+            CheckDodgeSuccess(attackAction);
 
             attackActionIndex = (attackActionIndex + 1) % 3; // 循环切换到下一动作
             attackCount++;
@@ -83,10 +98,38 @@ public class EnemyCombatController : MonoBehaviour
         attackActionIndex = (attackActionIndex + 1) % 3; // 准备下一个动作
         attackCount = 0; // 重置攻击次数
 
+        weaknessTrigger.transform.position = weaknessPositions[attackSet];
+        Debug.Log(weaknessTrigger.transform.position);
         weaknessTrigger?.SetActive(true); // 显示破绽 Trigger
+        StartCoroutine(FadeInWeaknessBall());
 
         // 如果玩家未攻击破绽，2 秒后返回普通循环
         Invoke(nameof(EndWeaknessState), 2f);
+    }
+    IEnumerator FadeInWeaknessBall()
+    {
+        float duration = 1f; // 淡入持续时间
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            float alpha = Mathf.Lerp(0, 1, elapsedTime / duration); // 从透明到完全不透明
+            SetMaterialTransparency(alpha);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        SetMaterialTransparency(1); // 确保最终完全不透明
+    }
+
+    void SetMaterialTransparency(float alpha)
+    {
+        if (weaknessMaterial != null)
+        {
+            Color color = weaknessMaterial.color;
+            color.a = alpha;
+            weaknessMaterial.color = color;
+        }
     }
 
     public void OnPlayerHitWeakness()
@@ -140,5 +183,34 @@ public class EnemyCombatController : MonoBehaviour
         animator.SetTrigger("dead"); // 播放死亡动画
         isBattleStarted = false; // 停止战斗状态
         weaknessTrigger?.SetActive(false); // 确保弱点 Trigger 隐藏
+    }
+
+    void CheckDodgeSuccess(int attackAction)
+    {
+        bool dodgeSuccess = false;
+
+        if (attackAction == 1 || attackAction == 3)
+        {
+            if (leftTrigger.IsPlayerInside())
+            {
+                dodgeSuccess = true;
+            }
+        }
+        else if (attackAction == 2)
+        {
+            if (rightTrigger.IsPlayerInside())
+            {
+                dodgeSuccess = true;
+            }
+        }
+
+        if (dodgeSuccess)
+        {
+            Debug.Log($"Player successfully dodged attack {attackAction}!");
+        }
+        else
+        {
+            Debug.Log($"Player failed to dodge attack {attackAction}!");
+        }
     }
 }
