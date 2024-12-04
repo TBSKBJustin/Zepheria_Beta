@@ -103,9 +103,7 @@ public class SkeletonCombatController : MonoBehaviour
         attackActionIndex = (attackActionIndex + 1) % 3; // 准备下一个动作
         attackCount = 0; // 重置攻击次数
 
-        //weaknessTrigger.transform.position = weaknessPositions[attackSet];
-        //Debug.Log(weaknessTrigger.transform.position);
-        //weaknessTrigger?.SetActive(true); // 显示破绽 Trigger
+
         GameObject targetBall = weaknessBalls[attackSet];
         targetBall.SetActive(true);
         StartCoroutine(FadeInWeaknessBall(targetBall));
