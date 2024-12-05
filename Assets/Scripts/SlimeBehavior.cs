@@ -4,13 +4,14 @@ using UnityEngine;
 public class SlimeBehavior : MonoBehaviour
 {
     public float bounceHeight = 0.5f; // How high the slime bounces
-    public float activationRange = 5.0f; // Distance within which the slime activates
+    public float activationRange = 5.0f; // Distance within which the slime stops bouncing
+    public float bounceSpeed = 1.0f; // Controls how fast the bounce happens (lower = slower)
     public Transform player; // Drag the XR Rig or Main Camera here
 
     public AudioClip bounceSound; // Sound effect for bouncing
     private AudioSource audioSource;
 
-    private bool hasBounced = false; // Ensure the slime only bounces once
+    private bool isBouncing = true; // Ensure the slime bounces by default
     private Vector3 groundPosition;
 
     void Start()
@@ -28,6 +29,9 @@ public class SlimeBehavior : MonoBehaviour
         // Assign the bounce sound
         audioSource.clip = bounceSound;
         audioSource.playOnAwake = false;
+
+        // Start the bouncing coroutine
+        StartCoroutine(BounceContinuously());
     }
 
     void Update()
@@ -44,47 +48,59 @@ public class SlimeBehavior : MonoBehaviour
         // Calculate the distance between the player and the slime
         float distanceToPlayer = Vector3.Distance(playerPosition, groundPosition);
 
-        // Trigger the bounce if within range and hasn't already bounced
-        if (distanceToPlayer <= activationRange && !hasBounced)
-        {
-            hasBounced = true;
-            StartCoroutine(BounceOnce());
-        }
+        // Stop bouncing if within range, otherwise continue bouncing
+        isBouncing = distanceToPlayer > activationRange;
     }
 
-    private IEnumerator BounceOnce()
+    private IEnumerator BounceContinuously()
     {
-        Debug.Log("Player detected. Slime is bouncing once.");
-
-        // Play bounce sound
-        if (bounceSound != null)
+        while (true)
         {
-            audioSource.Play();
+            if (isBouncing)
+            {
+                // Play bounce sound
+                if (bounceSound != null && !audioSource.isPlaying)
+                {
+                    audioSource.Play();
+                }
+
+                // Bounce up
+                Vector3 targetPosition = new Vector3(groundPosition.x, groundPosition.y + bounceHeight, groundPosition.z);
+                float duration = 1.0f / bounceSpeed; // Duration based on bounce speed
+                float elapsedTime = 0f;
+
+                while (elapsedTime < duration)
+                {
+                    transform.position = Vector3.Lerp(groundPosition, targetPosition, elapsedTime / duration);
+                    elapsedTime += Time.deltaTime;
+                    yield return null;
+                }
+
+                // Return to the ground
+                elapsedTime = 0f;
+                while (elapsedTime < duration)
+                {
+                    transform.position = Vector3.Lerp(targetPosition, groundPosition, elapsedTime / duration);
+                    elapsedTime += Time.deltaTime;
+                    yield return null;
+                }
+
+                transform.position = groundPosition;
+            }
+            else
+            {
+                // Ensure the slime is at the ground position when not bouncing
+                transform.position = groundPosition;
+
+                // Stop bounce sound
+                if (audioSource.isPlaying)
+                {
+                    audioSource.Stop();
+                }
+            }
+
+            yield return null; // Wait until the next frame
         }
-
-        // Bounce up
-        Vector3 targetPosition = new Vector3(groundPosition.x, groundPosition.y + bounceHeight, groundPosition.z);
-        float duration = 0.25f; // Duration of the bounce
-        float elapsedTime = 0f;
-
-        while (elapsedTime < duration)
-        {
-            transform.position = Vector3.Lerp(groundPosition, targetPosition, elapsedTime / duration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        // Return to the ground
-        elapsedTime = 0f;
-        while (elapsedTime < duration)
-        {
-            transform.position = Vector3.Lerp(targetPosition, groundPosition, elapsedTime / duration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        transform.position = groundPosition;
-        Debug.Log("Bounce complete.");
     }
 
     private void OnDrawGizmosSelected()
