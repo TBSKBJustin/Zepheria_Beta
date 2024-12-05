@@ -46,7 +46,7 @@ public class RoomTrigger : MonoBehaviour
         }
     }
 
-    void TriggerScaryVoiceAndText()
+    public void TriggerScaryVoiceAndText()
     {
         // Play the scary voice at the table's position
         AudioSource.PlayClipAtPoint(scaryVoiceClip, table.position);

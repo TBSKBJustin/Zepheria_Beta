@@ -19,10 +19,10 @@ public class Explosion : MonoBehaviour
         originalPosition = door.transform.position;
 
         // Start the sequence after 6 seconds
-        Invoke("TriggerExplosion", 6f);
+        //Invoke("TriggerExplosion", 6f);
     }
 
-    void TriggerExplosion()
+    public void TriggerExplosion()
     {
         // Play explosion sound
         explosionSound.Play();
