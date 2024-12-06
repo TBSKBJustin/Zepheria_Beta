@@ -16,6 +16,8 @@ public class RoomTrigger : MonoBehaviour
     public float displayDuration = 3f;  // Time for text to stay visible
     public float fadeOutDuration = 1f;  // Time for text to fade out
 
+    public GameObject door; // Reference to the door object
+
     private bool hasTriggered = false;  // Ensure the event only triggers once
 
     void Start()
@@ -25,6 +27,12 @@ public class RoomTrigger : MonoBehaviour
         SetTextAlpha(text2, 0);
         SetTextAlpha(text3, 0);
         SetTextAlpha(text4, 0);
+
+        // Ensure the door is initially inactive
+        if (door != null)
+        {
+            door.SetActive(false);
+        }
     }
 
     void Update()
@@ -62,6 +70,12 @@ public class RoomTrigger : MonoBehaviour
         yield return ShowText(text2);
         yield return ShowText(text3);
         yield return ShowText(text4);
+
+        // Activate the door after the last text
+        if (door != null)
+        {
+            door.SetActive(true);
+        }
     }
 
     IEnumerator ShowText(TextMeshProUGUI text)
