@@ -4625,9 +4625,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f767254cad5364c73a2f9dff91ca4657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 390781122}
+  player: {fileID: 8725116}
   table: {fileID: 1099142741}
-  activationRange: 10
+  activationRange: 3
   scaryVoiceClip: {fileID: 8300000, guid: 087752c193873463c88feee7dc1097b1, type: 3}
   text1: {fileID: 1599282602}
   text2: {fileID: 1520216565}
@@ -15845,8 +15845,6 @@ PlayableDirector:
   m_SceneBindings:
   - key: {fileID: -9111129211316853832, guid: cbc2dfb7c0f9683459de4f172a9520f6, type: 2}
     value: {fileID: 1603389276}
-  - key: {fileID: 2404749510424396808, guid: cbc2dfb7c0f9683459de4f172a9520f6, type: 2}
-    value: {fileID: 1603389276}
   m_ExposedReferences:
     m_References:
     - 353ef2d8ac4654e7780f65a17d20e7cb: {fileID: 203520704}
@@ -15899,7 +15897,7 @@ MonoBehaviour:
           m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 382300836}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: RoomTrigger, Assembly-CSharp
           m_MethodName: TriggerScaryVoiceAndText
           m_Mode: 1
