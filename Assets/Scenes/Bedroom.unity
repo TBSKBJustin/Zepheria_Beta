@@ -4627,14 +4627,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 8725116}
   table: {fileID: 1099142741}
-  activationRange: 3
+  activationRange: 4
   scaryVoiceClip: {fileID: 8300000, guid: 087752c193873463c88feee7dc1097b1, type: 3}
   text1: {fileID: 1599282602}
   text2: {fileID: 1520216565}
   text3: {fileID: 197580560}
   text4: {fileID: 45517637}
   fadeInDuration: 1
-  displayDuration: 1.8
+  displayDuration: 1.9
   fadeOutDuration: 1
 --- !u!1 &383918594
 GameObject:
