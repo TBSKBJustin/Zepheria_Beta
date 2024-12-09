@@ -3023,6 +3023,8 @@ MonoBehaviour:
   MainPanel: {fileID: 1412122935}
   OptionsPanel: {fileID: 1522964432}
   AboutPanel: {fileID: 0}
+  defaultPlayerPosition: {x: 69.57, y: 1.29, z: 25.93}
+  defaultPlayerRotation: {x: 0, y: 0.9995134, z: 0, w: -0.031192651}
 --- !u!114 &724708710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6068,12 +6070,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1744267954}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0.7071068, y: 0.0000000018626451, z: -0.0000000018626451, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 9.132099, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2084416424}
+  m_Father: {fileID: 1944526281}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1862733103
 GameObject:
@@ -6151,7 +6153,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2084416424}
-  - {fileID: 1973055066}
   m_Father: {fileID: 1417959686}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1903381164
@@ -6640,7 +6641,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1973055066}
+  - {fileID: 1744267956}
   m_Father: {fileID: 2084416424}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1973055065
@@ -6670,11 +6673,11 @@ Transform:
   m_GameObject: {fileID: 1973055065}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.1276002, z: 0}
+  m_LocalPosition: {x: 0, y: 1.0100002, z: 0}
   m_LocalScale: {x: 1, y: 0.01, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1903381163}
+  m_Father: {fileID: 1944526281}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1973055067
 MeshRenderer:
@@ -7067,7 +7070,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1744267956}
   - {fileID: 1944526281}
   - {fileID: 1054360947}
   - {fileID: 1397228888}
