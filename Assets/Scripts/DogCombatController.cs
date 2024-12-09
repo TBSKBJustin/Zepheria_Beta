@@ -10,6 +10,8 @@ public class DogCombatController : MonoBehaviour
     public DodgeTrigger leftTrigger;  // 左边闪避区域
     public DodgeTrigger midTrigger;   // 中间闪避区域
     public DodgeTrigger rightTrigger; // 右边闪避区域
+    public GameObject DogeTrigger;
+    public GameObject Healthbar;
 
 
     [Header("Action UI Sprites")]
@@ -46,6 +48,10 @@ public class DogCombatController : MonoBehaviour
         UpdateHealthBar();
         DisableWeaknessBalls();
         DisableActionSprites();
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
     }
 
     public void StartBattle()
@@ -98,15 +104,12 @@ public class DogCombatController : MonoBehaviour
         if (inWeaknessState) yield break; // 若在弱点状态中不进行普通攻击
 
         int attackAction = attackCombinations[attackSet][attackActionIndex];
-        ShowActionSprite(attackAction);
         animator.SetTrigger($"attack{attackAction}");
         attackCount++;
 
         // 等待攻击间隔完成后进行闪避判定
         yield return new WaitForSeconds(attackInterval);
 
-        CheckDodgeSuccess(attackAction);
-        DisableActionSprites();
 
         // 准备下一个动作序列
         attackActionIndex = (attackActionIndex + 1) % 2;
@@ -124,7 +127,6 @@ public class DogCombatController : MonoBehaviour
         inWeaknessState = true;
 
         int weaknessAction = attackCombinations[attackSet][attackActionIndex];
-        ShowActionSprite(weaknessAction);
 
         animator.speed = 0.2f;
         animator.SetTrigger($"attack{weaknessAction}");
@@ -158,11 +160,9 @@ public class DogCombatController : MonoBehaviour
             if (!weaknessHit)
             {
                 Debug.Log("Player missed Weakness!");
-                CheckDodgeSuccess(attackCombinations[attackSet][attackActionIndex]);
             }
 
             // 重置状态
-            DisableActionSprites();
             DisableWeaknessBalls();
             animator.SetTrigger("idle");
             animator.speed = 1f;
@@ -185,12 +185,13 @@ public class DogCombatController : MonoBehaviour
             hitBall.SetActive(false);
             inWeaknessState = false;
             animator.SetTrigger("HitReact");
+            //PlaySound(hurtSound);
             animator.speed = 1f;
 
             // 给敌人造成伤害
             TakeDamage(20);
 
-            DisableActionSprites();
+            //DisableActionSprites();
         }
     }
 
@@ -203,10 +204,7 @@ public class DogCombatController : MonoBehaviour
         {
             dodgeSuccess = true;
         }
-        //else if (attackAction == 2 && midTrigger.IsPlayerInside())
-        //{
-        //    dodgeSuccess = true;
-        //}
+
         else if (attackAction == 2 && rightTrigger.IsPlayerInside())
         {
             dodgeSuccess = true;
@@ -311,11 +309,8 @@ public class DogCombatController : MonoBehaviour
         isBattleStarted = false;
         animator.SetTrigger("dead");
 
-        DogBattleTrigger battleTrigger = FindObjectOfType<DogBattleTrigger>();
-        if (battleTrigger != null)
-        {
-            battleTrigger.EndBattle();
-        }
+        DogeTrigger.SetActive(false);
+        Healthbar.SetActive(false);
 
         // 通知玩家退出战斗模式
         CombatMode playerCombatMode = FindObjectOfType<CombatMode>();
@@ -332,4 +327,19 @@ public class DogCombatController : MonoBehaviour
             _healthbarSprite.fillAmount = (float)currentHealth / maxHealth;
         }
     }
+
+    //------------------------------------Sound
+    public AudioSource audioSource;
+    public AudioClip attackSound;
+    public AudioClip hurtSound;
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.clip = clip;
+            audioSource.Play();
+        }
+    }
+
 }

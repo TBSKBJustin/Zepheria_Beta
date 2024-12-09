@@ -15,13 +15,13 @@ public class DogBattleTrigger : MonoBehaviour
     public float rotationSpeedX = 30f;
     public float rotationSpeedZ = 30f;
 
-    //void Update()
-    //{
-    //    if (enterBattleTrigger != null)
-    //    {
-    //        enterBattleTrigger.transform.Rotate(new Vector3(rotationSpeedX, 0, rotationSpeedZ) * Time.deltaTime);
-    //    }
-    //}
+    void Update()
+    {
+        if (enterBattleTrigger != null)
+        {
+            enterBattleTrigger.transform.Rotate(new Vector3(rotationSpeedX, 0, rotationSpeedZ) * Time.deltaTime);
+        }
+    }
 
     void OnTriggerEnter(Collider other)
     {

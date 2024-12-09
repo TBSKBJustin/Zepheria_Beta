@@ -10,6 +10,9 @@ public class SkeletonCombatController : MonoBehaviour
     public DodgeTrigger leftTrigger;  // 左边闪避区域
     public DodgeTrigger midTrigger;   // 中间闪避区域
     public DodgeTrigger rightTrigger; // 右边闪避区域
+    public GameObject DogeTrigger;
+    public GameObject Healthbar;
+
 
     [Header("Action UI Sprites")]
     public Image rightActionSprite;
@@ -46,6 +49,10 @@ public class SkeletonCombatController : MonoBehaviour
         UpdateHealthBar();
         DisableWeaknessBalls();
         DisableActionSprites();
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
     }
 
     public void StartBattle()
@@ -98,18 +105,14 @@ public class SkeletonCombatController : MonoBehaviour
         if (inWeaknessState) yield break; // 若在弱点状态中不进行普通攻击
 
         int attackAction = attackCombinations[attackSet][attackActionIndex];
-        ShowActionSprite(attackAction);
         animator.SetTrigger($"attack{attackAction}");
         attackCount++;
 
         // 等待攻击间隔完成后进行闪避判定
         yield return new WaitForSeconds(attackInterval);
 
-        CheckDodgeSuccess(attackAction);
-        DisableActionSprites();
-
         // 准备下一个动作序列
-        attackActionIndex = (attackActionIndex + 1) % 3;
+        attackActionIndex = (attackActionIndex + 1) % 2;
     }
 
     /// <summary>
@@ -124,7 +127,6 @@ public class SkeletonCombatController : MonoBehaviour
         inWeaknessState = true;
 
         int weaknessAction = attackCombinations[attackSet][attackActionIndex];
-        ShowActionSprite(weaknessAction);
 
         animator.speed = 0.2f;
         animator.SetTrigger($"attack{weaknessAction}");
@@ -158,11 +160,9 @@ public class SkeletonCombatController : MonoBehaviour
             if (!weaknessHit)
             {
                 Debug.Log("Player missed Weakness!");
-                CheckDodgeSuccess(attackCombinations[attackSet][attackActionIndex]);
             }
 
             // 重置状态
-            DisableActionSprites();
             DisableWeaknessBalls();
             animator.SetTrigger("idle");
             animator.speed = 1f;
@@ -172,11 +172,11 @@ public class SkeletonCombatController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 当玩家击中弱点时调用此方法。  
-    /// 外部逻辑：请在玩家攻击弱点球的逻辑中调用本方法。
-    /// </summary>
-    public void OnPlayerHitWeakness(GameObject hitBall)
+        /// <summary>
+        /// 当玩家击中弱点时调用此方法。  
+        /// 外部逻辑：请在玩家攻击弱点球的逻辑中调用本方法。
+        /// </summary>
+        public void OnPlayerHitWeakness(GameObject hitBall)
     {
         if (inWeaknessState)
         {
@@ -311,6 +311,9 @@ public class SkeletonCombatController : MonoBehaviour
         isBattleStarted = false;
         animator.SetTrigger("dead");
 
+        DogeTrigger.SetActive(false);
+        Healthbar.SetActive(false);
+
         // 通知玩家退出战斗模式
         CombatMode playerCombatMode = FindObjectOfType<CombatMode>();
         if (playerCombatMode != null)
@@ -324,6 +327,18 @@ public class SkeletonCombatController : MonoBehaviour
         if (_healthbarSprite != null)
         {
             _healthbarSprite.fillAmount = (float)currentHealth / maxHealth;
+        }
+    }
+
+    //------------------------------------Sound
+    public AudioSource audioSource;
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.clip = clip;
+            audioSource.Play();
         }
     }
 }
