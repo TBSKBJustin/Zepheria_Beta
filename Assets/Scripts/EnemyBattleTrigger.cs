@@ -11,6 +11,18 @@ public class EnemyBattleTrigger : MonoBehaviour
     public GameObject midTrigger;
     public GameObject leftTrigger;
     public GameObject enterBattleTrigger;
+    public GameObject HealthBar;
+
+    public float rotationSpeedX = 30f;
+    public float rotationSpeedZ = 30f;
+
+    void Update()
+    {
+        if (enterBattleTrigger != null)
+        {
+            enterBattleTrigger.transform.Rotate(new Vector3(rotationSpeedX, 0, rotationSpeedZ) * Time.deltaTime);
+        }
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -26,6 +38,7 @@ public class EnemyBattleTrigger : MonoBehaviour
         rightTrigger.SetActive(true);
         leftTrigger.SetActive(true);
         midTrigger.SetActive(true);
+        HealthBar.SetActive(true);
 
         FindObjectOfType<CombatMode>().EnterCombatMode();
 

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkeletonCombatController : MonoBehaviour
+public class DogCombatController : MonoBehaviour
 {
     [Header("References")]
     public Animator animator; // 敌人的 Animator
     public DodgeTrigger leftTrigger;  // 左边闪避区域
     public DodgeTrigger midTrigger;   // 中间闪避区域
     public DodgeTrigger rightTrigger; // 右边闪避区域
+
 
     [Header("Action UI Sprites")]
     public Image rightActionSprite;
@@ -28,9 +29,8 @@ public class SkeletonCombatController : MonoBehaviour
     public float attackInterval = 2f; // 攻击间隔（攻击间的冷却时间）
     private readonly int[][] attackCombinations =
     {
-        new int[] { 1, 2, 3 },
-        new int[] { 2, 3, 1 },
-        new int[] { 3, 1, 2 }
+        new int[] { 1, 2},
+        new int[] { 2, 1}
     };
 
     private int currentHealth;
@@ -75,7 +75,7 @@ public class SkeletonCombatController : MonoBehaviour
             attackCount = 0;
 
             // 执行3次普通攻击
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 2; i++)
             {
                 if (!isBattleStarted) yield break;
                 yield return StartCoroutine(PerformSingleAttack());
@@ -109,7 +109,7 @@ public class SkeletonCombatController : MonoBehaviour
         DisableActionSprites();
 
         // 准备下一个动作序列
-        attackActionIndex = (attackActionIndex + 1) % 3;
+        attackActionIndex = (attackActionIndex + 1) % 2;
     }
 
     /// <summary>
@@ -203,11 +203,11 @@ public class SkeletonCombatController : MonoBehaviour
         {
             dodgeSuccess = true;
         }
-        else if (attackAction == 2 && midTrigger.IsPlayerInside())
-        {
-            dodgeSuccess = true;
-        }
-        else if (attackAction == 3 && rightTrigger.IsPlayerInside())
+        //else if (attackAction == 2 && midTrigger.IsPlayerInside())
+        //{
+        //    dodgeSuccess = true;
+        //}
+        else if (attackAction == 2 && rightTrigger.IsPlayerInside())
         {
             dodgeSuccess = true;
         }
@@ -284,10 +284,10 @@ public class SkeletonCombatController : MonoBehaviour
             case 1:
                 leftActionSprite.enabled = true;
                 break;
+            //case 2:
+            //    midActionSprite.enabled = true;
+            //    break;
             case 2:
-                midActionSprite.enabled = true;
-                break;
-            case 3:
                 rightActionSprite.enabled = true;
                 break;
         }
@@ -310,6 +310,12 @@ public class SkeletonCombatController : MonoBehaviour
         Debug.Log("Enemy Died!");
         isBattleStarted = false;
         animator.SetTrigger("dead");
+
+        DogBattleTrigger battleTrigger = FindObjectOfType<DogBattleTrigger>();
+        if (battleTrigger != null)
+        {
+            battleTrigger.EndBattle();
+        }
 
         // 通知玩家退出战斗模式
         CombatMode playerCombatMode = FindObjectOfType<CombatMode>();
