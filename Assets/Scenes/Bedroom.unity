@@ -4627,7 +4627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 8725116}
   table: {fileID: 1099142741}
-  activationRange: 4
+  activationRange: 3.05
   scaryVoiceClip: {fileID: 8300000, guid: 087752c193873463c88feee7dc1097b1, type: 3}
   text1: {fileID: 1599282602}
   text2: {fileID: 1520216565}
