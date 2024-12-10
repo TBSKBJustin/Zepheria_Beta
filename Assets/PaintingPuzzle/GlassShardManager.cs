@@ -208,37 +208,43 @@ public class GlassPaneManager : MonoBehaviour
 
     private void SnapShardToSlot(ShardSlot shardSlot)
     {
-        // Ensure the shard is properly snapped to its slot
+        // Move the shard to the slot's position and rotation
         shardSlot.shard.transform.position = shardSlot.slot.position;
         shardSlot.shard.transform.rotation = shardSlot.slot.rotation;
 
-        // Disable physics to lock the shard in place
+        // Make the shard a child of the slot so it doesn't leave that position
+        shardSlot.shard.transform.SetParent(shardSlot.slot);
+
+        // Disable physics and lock the shard in place
         Rigidbody rb = shardSlot.shard.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.isKinematic = true; // Stop further movement
-            rb.useGravity = false; // Prevent falling
+            rb.isKinematic = true;
+            rb.useGravity = false;
+            rb.constraints = RigidbodyConstraints.FreezeAll; // Prevents any movement or rotation
         }
 
-        // Disable grabbing functionality (if using an XR Grab Interactable)
+        // Disable grabbing
         var grabInteractable = shardSlot.shard.GetComponent<XRGrabInteractable>();
         if (grabInteractable != null)
         {
-            grabInteractable.enabled = false; // Disable grabbing
+            grabInteractable.enabled = false;
         }
 
-        // Stop all flashing and set the shard to its default material
+        // Update shard state
         shardSlot.isPlaced = true;
         shardSlot.isBeingGrabbed = false;
 
+        // Restore the shard's default material
         MeshRenderer renderer = shardSlot.shard.GetComponent<MeshRenderer>();
         if (renderer != null && shardSlot.defaultMaterial != null)
         {
             renderer.material = shardSlot.defaultMaterial;
         }
 
-        Debug.Log($"Shard {shardSlot.shard.name} snapped into position.");
+        Debug.Log($"Shard {shardSlot.shard.name} snapped into position and is now permanent.");
     }
+
 
     private bool AreAllShardsPlaced()
     {
