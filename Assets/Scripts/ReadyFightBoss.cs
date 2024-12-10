@@ -10,9 +10,15 @@ public class ReadyFightBoss : MonoBehaviour
     public float rotationSpeedZ = 30f;
 
     public AudioClip battleMusic; // 音乐片段
-    public AudioSource specifiedAudioSource; // 指定的 AudioSource
+    private AudioSource audioSource; // 音频组件
     private bool hasTriggered = false; // 防止重复触发
 
+    void Start()
+    {
+        // 添加 AudioSource 组件
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false; // 不自动播放
+    }
 
     void Update()
     {
@@ -34,22 +40,15 @@ public class ReadyFightBoss : MonoBehaviour
 
     void PlayBattleMusic()
     {
-        if (specifiedAudioSource != null)
+        if (battleMusic != null)
         {
-            if (battleMusic != null)
-            {
-                specifiedAudioSource.clip = battleMusic;
-                specifiedAudioSource.Play();
-                Debug.Log("Battle music started on specified AudioSource!");
-            }
-            else
-            {
-                Debug.LogWarning("No battle music assigned!");
-            }
+            audioSource.clip = battleMusic;
+            audioSource.Play();
+            Debug.Log("Battle music started!");
         }
         else
         {
-            Debug.LogError("No AudioSource assigned! Please assign an AudioSource in the Inspector.");
+            Debug.LogWarning("No battle music assigned!");
         }
     }
 }

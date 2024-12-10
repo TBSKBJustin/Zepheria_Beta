@@ -12,6 +12,8 @@ public class WolfCombatController : MonoBehaviour
     public DodgeTrigger rightTrigger; // 右边闪避区域
     public GameObject DogeTrigger;
     public GameObject Healthbar;
+    public AudioClip realMeMusic;
+    public GameObject EndSound;
 
 
     [Header("Action UI Sprites")]
@@ -172,11 +174,11 @@ public class WolfCombatController : MonoBehaviour
         }
     }
 
-        /// <summary>
-        /// 当玩家击中弱点时调用此方法。  
-        /// 外部逻辑：请在玩家攻击弱点球的逻辑中调用本方法。
-        /// </summary>
-        public void OnPlayerHitWeakness(GameObject hitBall)
+    /// <summary>
+    /// 当玩家击中弱点时调用此方法。  
+    /// 外部逻辑：请在玩家攻击弱点球的逻辑中调用本方法。
+    /// </summary>
+    public void OnPlayerHitWeakness(GameObject hitBall)
     {
         if (inWeaknessState)
         {
@@ -313,6 +315,7 @@ public class WolfCombatController : MonoBehaviour
 
         DogeTrigger.SetActive(false);
         Healthbar.SetActive(false);
+        EndSound.SetActive(true);
 
         // 通知玩家退出战斗模式
         CombatMode playerCombatMode = FindObjectOfType<CombatMode>();
@@ -320,6 +323,7 @@ public class WolfCombatController : MonoBehaviour
         {
             playerCombatMode.ExitCombatMode();
         }
+
     }
 
     void UpdateHealthBar()
@@ -340,5 +344,10 @@ public class WolfCombatController : MonoBehaviour
             audioSource.clip = clip;
             audioSource.Play();
         }
+    }
+
+    public void RealME()
+    {
+        PlaySound(realMeMusic); // 播放固定的 RealME 音乐
     }
 }
