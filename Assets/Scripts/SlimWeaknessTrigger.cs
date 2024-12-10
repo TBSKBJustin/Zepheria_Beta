@@ -19,7 +19,7 @@ public class SlimWeaknessTrigger : MonoBehaviour
             if (slimeController != null)
             {
                 Debug.Log($"{gameObject.name} hit by Sword!");
-                slimeController.OnPlayerHitWeakness(); // Trigger slime death
+                slimeController.OnPlayerHitWeakness(gameObject); // 传入当前弱点球对象
             }
             else
             {
@@ -27,4 +27,5 @@ public class SlimWeaknessTrigger : MonoBehaviour
             }
         }
     }
+
 }

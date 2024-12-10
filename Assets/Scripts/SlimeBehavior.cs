@@ -79,33 +79,43 @@ public class SlimeBehavior : MonoBehaviour
         }
     }
 
-    public void OnPlayerHitWeakness()
+    public void OnPlayerHitWeakness(GameObject weaknessBall)
     {
         if (isDead) return;
 
         isDead = true;
+
+        // 让 Weakness Ball 消失
+        if (weaknessBall != null)
+        {
+            Destroy(weaknessBall); // 直接销毁弱点球
+        }
+
         StopBouncing();
-        StartCoroutine(FadeOutAndDestroy());
+        StartCoroutine(ScaleUpAndDestroy());
     }
 
-    private IEnumerator FadeOutAndDestroy()
+    private IEnumerator ScaleUpAndDestroy()
     {
-        Renderer renderer = GetComponent<Renderer>();
-        Material material = renderer.material;
-        float duration = 1.5f; // Duration of fade-out
+        float duration = 1.5f; // 持续时间
         float elapsedTime = 0f;
+
+        Vector3 originalScale = transform.localScale; // 初始大小
+        Vector3 targetScale = originalScale * 2f;    // 最终大小，放大到 2 倍
 
         while (elapsedTime < duration)
         {
-            float alpha = Mathf.Lerp(1, 0, elapsedTime / duration);
-            Color color = material.color;
-            color.a = alpha;
-            material.color = color;
+            // 插值计算 scale
+            transform.localScale = Vector3.Lerp(originalScale, targetScale, elapsedTime / duration);
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
+        // 确保到达最终大小后销毁对象
+        transform.localScale = targetScale;
         Destroy(gameObject);
     }
+
+
 }
