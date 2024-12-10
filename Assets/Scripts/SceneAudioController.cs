@@ -5,6 +5,7 @@ public class SceneAudioController : MonoBehaviour
 {
     public AudioClip audioClip1; // 第一段音频
     public AudioClip audioClip2; // 第二段音频
+    public GameObject slimes;
 
     private AudioSource audioSource;
 
@@ -31,6 +32,7 @@ public class SceneAudioController : MonoBehaviour
         // 播放第二段音频
         if (audioClip2 != null)
         {
+            slimes.SetActive(true);
             audioSource.clip = audioClip2;
             audioSource.Play();
             yield return new WaitForSeconds(audioClip2.length); // 等待第二段音频播放完毕

@@ -140,12 +140,12 @@ public class SlimeBehavior : MonoBehaviour
             playerCombatMode.ExitCombatMode();
             playerCombatMode.IncreaseMaxHealth(20); // 玩家血量上限+20
             playerCombatMode.UpdatePlayerHealthBar();
-            //if (playerCombatMode.maxHealth == 105)
-            //{
-            //    TheDoor.SetActive(true);
-            //    audioSource.clip = theDoorSound;
-            //    audioSource.Play();
-            //}
+            if (playerCombatMode.maxHealth == 105)
+            {
+                TheDoor.SetActive(true);
+                //    audioSource.clip = theDoorSound;
+                //    audioSource.Play();
+            }
         }
         Destroy(gameObject);
     }
