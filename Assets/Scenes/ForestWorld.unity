@@ -4468,10 +4468,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2707cfb914840c48d3b877a2cb8909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 5
+  detectionRadius: 3
   bounceHeight: 1
-  bounceSpeed: 1.5
-  grabbedColor: {r: 1, g: 0, b: 0, a: 1}
+  bounceSpeed: 2
+  bounceSound: {fileID: 8300000, guid: 1d2bc07a226fa44a9b1dfbb2c5ada45d, type: 3}
+  mainCamera: {fileID: 1944526278}
 --- !u!1001 &1238888262
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -23,8 +23,6 @@ MonoBehaviour:
   m_Clips: []
   m_Markers:
     m_Objects:
-    - {fileID: 3672152611782522044}
-    - {fileID: 212921941341208761}
     - {fileID: -687548795493987981}
 --- !u!114 &-9107346810058947788
 MonoBehaviour:
@@ -51,7 +49,7 @@ MonoBehaviour:
     m_Start: 43.74999999999999
     m_ClipIn: 0
     m_Asset: {fileID: 5868715686405136119}
-    m_Duration: 1.9350625
+    m_Duration: 1.9350625000000008
     m_TimeScale: 1
     m_ParentTrack: {fileID: -9107346810058947788}
     m_EaseInDuration: 0
@@ -491,22 +489,6 @@ MonoBehaviour:
     m_ScenePreview: 1
   m_DurationMode: 0
   m_MarkerTrack: {fileID: 0}
---- !u!114 &212921941341208761
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
-  m_Name: Signal Emitter
-  m_EditorClassIdentifier: 
-  m_Time: 0
-  m_Retroactive: 0
-  m_EmitOnce: 0
-  m_Asset: {fileID: 0}
 --- !u!114 &1000987431454814416
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -520,7 +502,7 @@ MonoBehaviour:
   m_Name: AudioPlayableAsset
   m_EditorClassIdentifier: 
   m_Clip: {fileID: 8300000, guid: 7162260ca18754e84b4f2891e7c51ff3, type: 3}
-  m_Loop: 0
+  m_Loop: 1
   m_bufferingTime: 0.1
   m_ClipProperties:
     volume: 1
@@ -558,22 +540,6 @@ MonoBehaviour:
   m_bufferingTime: 0.1
   m_ClipProperties:
     volume: 1
---- !u!114 &3672152611782522044
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
-  m_Name: Signal Emitter
-  m_EditorClassIdentifier: 
-  m_Time: 0
-  m_Retroactive: 0
-  m_EmitOnce: 0
-  m_Asset: {fileID: 0}
 --- !u!114 &5682390486678639357
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -795,10 +761,10 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: 01 good sleep
   - m_Version: 1
-    m_Start: 4.5
+    m_Start: 3.738
     m_ClipIn: 0
     m_Asset: {fileID: -8660340581339759599}
-    m_Duration: 1.8453333333333333
+    m_Duration: 1.845333333333333
     m_TimeScale: 1
     m_ParentTrack: {fileID: 7101504891731050297}
     m_EaseInDuration: 0
@@ -855,7 +821,7 @@ MonoBehaviour:
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
     m_BlendInDuration: -1
-    m_BlendOutDuration: 0
+    m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
       m_Curve: []
@@ -879,15 +845,15 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: 03 how long
   - m_Version: 1
-    m_Start: 11.53799999999997
-    m_ClipIn: 0
+    m_Start: 11.537999999999975
+    m_ClipIn: 0.000000000000005329070518200751
     m_Asset: {fileID: 3168961467805077581}
-    m_Duration: 1.8666666666666667
+    m_Duration: 1.8666666666666614
     m_TimeScale: 1
     m_ParentTrack: {fileID: 7101504891731050297}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 0
+    m_BlendInDuration: -1
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
@@ -915,13 +881,13 @@ MonoBehaviour:
     m_Start: 13.404666666666673
     m_ClipIn: 0
     m_Asset: {fileID: 6541384240595463339}
-    m_Duration: 1.9733333333333334
+    m_Duration: 1.9733333333333327
     m_TimeScale: 1
     m_ParentTrack: {fileID: 7101504891731050297}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
     m_BlendInDuration: -1
-    m_BlendOutDuration: 0
+    m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
       m_Curve: []
@@ -945,15 +911,15 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: 05 found Dad
   - m_Version: 1
-    m_Start: 15.37799999999997
-    m_ClipIn: 0
+    m_Start: 15.378000000000005
+    m_ClipIn: 0.00000000000003552713678800501
     m_Asset: {fileID: -6955856413728043063}
-    m_Duration: 2.336
+    m_Duration: 2.3359999999999643
     m_TimeScale: 1
     m_ParentTrack: {fileID: 7101504891731050297}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 0
+    m_BlendInDuration: -1
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
@@ -1014,7 +980,7 @@ MonoBehaviour:
     m_Start: 28.566666666666666
     m_ClipIn: 0
     m_Asset: {fileID: -6313668247405524617}
-    m_Duration: 4.448
+    m_Duration: 4.448000000000004
     m_TimeScale: 1
     m_ParentTrack: {fileID: 7101504891731050297}
     m_EaseInDuration: 0
@@ -1065,7 +1031,7 @@ MonoBehaviour:
     m_Start: 22.079333333333295
     m_ClipIn: 0
     m_Asset: {fileID: -7366548390706922426}
-    m_Duration: 2.9546666666666668
+    m_Duration: 5.717333333333357
     m_TimeScale: 1
     m_ParentTrack: {fileID: 7101504891731050297}
     m_EaseInDuration: 0

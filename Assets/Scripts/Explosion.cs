@@ -19,8 +19,8 @@ public class Explosion : MonoBehaviour
         // Set the initial calm music (you can set this directly in the inspector) and play it
         originalPosition = door.transform.position;
 
-        // Start the sequence after 6 seconds
-        Invoke("TriggerExplosion", 6f);
+        // Start the sequence after 38 seconds
+        Invoke("TriggerExplosion", 38f);
     }
 
     void TriggerExplosion()
