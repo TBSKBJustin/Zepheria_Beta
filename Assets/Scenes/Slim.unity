@@ -826,8 +826,9 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
-  maxHealth: 100
+  maxHealth: 20
   playerHealthBar: {fileID: 1901029934}
+  combatMusic: {fileID: 0}
 --- !u!1 &55391446
 GameObject:
   m_ObjectHideFlags: 0
@@ -6249,6 +6250,8 @@ MonoBehaviour:
   bounceHeight: 1
   bounceSpeed: 2
   bounceSound: {fileID: 8300000, guid: 1d2bc07a226fa44a9b1dfbb2c5ada45d, type: 3}
+  deathSound: {fileID: 8300000, guid: f6dd1846b9e094a288d74f8a6b22d56a, type: 3}
+  Triggers: {fileID: 1966965835}
   isDead: 0
 --- !u!1 &533300067
 GameObject:

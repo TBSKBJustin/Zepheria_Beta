@@ -43,6 +43,6 @@ public class SlimBattleTrigger : MonoBehaviour
     {
         FightTrigger.SetActive(false);
         Debug.Log("Battle Ended!");
-        FindObjectOfType<CombatMode>().ExitCombatMode();
     }
+
 }

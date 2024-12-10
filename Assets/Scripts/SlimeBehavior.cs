@@ -6,6 +6,8 @@ public class SlimeBehavior : MonoBehaviour
     public float bounceHeight = 0.5f;  // Height of each bounce
     public float bounceSpeed = 2f;     // Speed of bounce
     public AudioClip bounceSound;      // Sound to play during bouncing
+    public AudioClip deathSound;
+    public GameObject Triggers;
 
     private Vector3 originalPosition;
     private AudioSource audioSource;
@@ -76,8 +78,13 @@ public class SlimeBehavior : MonoBehaviour
         if (audioSource.isPlaying)
         {
             audioSource.Stop();
+            audioSource.clip = deathSound;
+            audioSource.loop = false; // 确保音效只播放一次
+            audioSource.Play();
         }
     }
+
+
 
     public void OnPlayerHitWeakness(GameObject weaknessBall)
     {
@@ -92,6 +99,8 @@ public class SlimeBehavior : MonoBehaviour
         }
 
         StopBouncing();
+
+        // 调用玩家的退出战斗模式和增加血量
         StartCoroutine(ScaleUpAndDestroy());
     }
 
@@ -114,6 +123,21 @@ public class SlimeBehavior : MonoBehaviour
 
         // 确保到达最终大小后销毁对象
         transform.localScale = targetScale;
+        if (deathSound != null)
+        {
+            audioSource.clip = deathSound;
+            audioSource.loop = false; // 确保音效只播放一次
+            audioSource.Play();
+        }
+
+        Triggers.SetActive(false);
+        CombatMode playerCombatMode = FindObjectOfType<CombatMode>();
+        if (playerCombatMode != null)
+        {
+            playerCombatMode.ExitCombatMode();
+            playerCombatMode.IncreaseMaxHealth(20); // 玩家血量上限+20
+            playerCombatMode.UpdatePlayerHealthBar();
+        }
         Destroy(gameObject);
     }
 
