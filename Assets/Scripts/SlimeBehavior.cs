@@ -3,16 +3,14 @@ using UnityEngine;
 
 public class SlimeBehavior : MonoBehaviour
 {
-    public float detectionRadius = 5f; // Distance within which the slime stops bouncing
     public float bounceHeight = 0.5f;  // Height of each bounce
     public float bounceSpeed = 2f;     // Speed of bounce
     public AudioClip bounceSound;      // Sound to play during bouncing
-    public Camera mainCamera;          // Assign this in the Inspector to track the player’s camera
 
     private Vector3 originalPosition;
     private AudioSource audioSource;
-    private bool isNearPlayer = false; // Whether the player is within range
-    private Coroutine bounceCoroutine; // Reference to the bounce coroutine
+    private Coroutine bounceCoroutine;
+    public bool isDead = false;
 
     void Start()
     {
@@ -25,42 +23,17 @@ public class SlimeBehavior : MonoBehaviour
         audioSource.loop = true;
 
         // Start the bounce coroutine
-        bounceCoroutine = StartCoroutine(Bounce());
-    }
-
-    void Update()
-    {
-        if (mainCamera == null)
-        {
-            Debug.LogWarning("Main Camera is not assigned. Please assign it in the Inspector.");
-            return;
-        }
-
-        // Check if the player is within the detection radius
-        isNearPlayer = Vector3.Distance(transform.position, mainCamera.transform.position) <= detectionRadius;
-
-        if (isNearPlayer)
-        {
-            StopBouncing();
-        }
-        else
-        {
-            StartBouncing();
-        }
+        StartBouncing();
     }
 
     private IEnumerator Bounce()
     {
         while (true)
         {
-            // Calculate the bounce positions
             Vector3 upPosition = new Vector3(originalPosition.x, originalPosition.y + bounceHeight, originalPosition.z);
             Vector3 downPosition = originalPosition;
 
-            // Move to the up position
             yield return MoveToPosition(transform.position, upPosition, 1f / bounceSpeed);
-
-            // Move to the down position
             yield return MoveToPosition(upPosition, downPosition, 1f / bounceSpeed);
         }
     }
@@ -81,7 +54,6 @@ public class SlimeBehavior : MonoBehaviour
 
     private void StartBouncing()
     {
-        // Resume bouncing and play the sound
         if (bounceCoroutine == null)
         {
             bounceCoroutine = StartCoroutine(Bounce());
@@ -95,7 +67,6 @@ public class SlimeBehavior : MonoBehaviour
 
     private void StopBouncing()
     {
-        // Stop bouncing and pause the sound
         if (bounceCoroutine != null)
         {
             StopCoroutine(bounceCoroutine);
@@ -106,5 +77,35 @@ public class SlimeBehavior : MonoBehaviour
         {
             audioSource.Stop();
         }
+    }
+
+    public void OnPlayerHitWeakness()
+    {
+        if (isDead) return;
+
+        isDead = true;
+        StopBouncing();
+        StartCoroutine(FadeOutAndDestroy());
+    }
+
+    private IEnumerator FadeOutAndDestroy()
+    {
+        Renderer renderer = GetComponent<Renderer>();
+        Material material = renderer.material;
+        float duration = 1.5f; // Duration of fade-out
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            float alpha = Mathf.Lerp(1, 0, elapsedTime / duration);
+            Color color = material.color;
+            color.a = alpha;
+            material.color = color;
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        Destroy(gameObject);
     }
 }
