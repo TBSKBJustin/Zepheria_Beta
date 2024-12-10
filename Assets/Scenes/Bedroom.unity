@@ -15136,27 +15136,12 @@ MonoBehaviour:
   m_Events:
     m_Signals:
     - {fileID: 11400000, guid: c1b452575bc1148afbff6016485c29ea, type: 2}
-    - {fileID: 11400000, guid: ebe42eba30208418691319af9bbd30de, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 203520707}
           m_TargetAssemblyTypeName: Explosion, Assembly-CSharp
           m_MethodName: TriggerExplosion
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: RoomTrigger, Assembly-CSharp
-          m_MethodName: TriggerScaryVoiceAndText
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
