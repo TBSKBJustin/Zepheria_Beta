@@ -12,6 +12,10 @@ public class DogCombatController : MonoBehaviour
     public DodgeTrigger rightTrigger; // 右边闪避区域
     public GameObject DogeTrigger;
     public GameObject Healthbar;
+    public AudioClip realMeMusic;
+    public AudioClip EXPO;
+    public GameObject Wolf;
+    //public bool notTheRealMe = false;
 
 
     [Header("Action UI Sprites")]
@@ -318,7 +322,48 @@ public class DogCombatController : MonoBehaviour
         {
             playerCombatMode.ExitCombatMode();
         }
+
+        // 延迟播放 RealME 音乐并在播放结束后缩放敌人
+        StartCoroutine(HandleDeathSequence());
     }
+
+    private IEnumerator HandleDeathSequence()
+    {
+        // 等待 3 秒后播放 RealME 音乐
+        yield return new WaitForSeconds(3f);
+
+        RealME();
+
+        // 等待音乐播放完成
+        yield return new WaitForSeconds(realMeMusic.length);
+
+        // 执行缩放并销毁
+        StartCoroutine(ScaleUpAndDestroy());
+    }
+
+    private IEnumerator ScaleUpAndDestroy()
+    {
+        float duration = 1.5f; // 持续时间
+        float elapsedTime = 0f;
+
+        Vector3 originalScale = transform.localScale; // 初始大小
+        Vector3 targetScale = originalScale * 2f;    // 最终大小，放大到 2 倍
+
+        while (elapsedTime < duration)
+        {
+            // 插值计算 scale
+            transform.localScale = Vector3.Lerp(originalScale, targetScale, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // 确保到达最终大小后销毁对象
+        transform.localScale = targetScale;
+        Wolf.SetActive(true);
+        Expl();
+        Destroy(gameObject);
+    }
+
 
     void UpdateHealthBar()
     {
@@ -340,6 +385,16 @@ public class DogCombatController : MonoBehaviour
             audioSource.clip = clip;
             audioSource.Play();
         }
+    }
+
+    public void RealME()
+    {
+        PlaySound(realMeMusic); // 播放固定的 RealME 音乐
+    }
+
+    public void Expl()
+    {
+        PlaySound(EXPO);
     }
 
 }
