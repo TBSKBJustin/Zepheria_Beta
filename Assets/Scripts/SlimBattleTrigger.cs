@@ -8,6 +8,7 @@ public class SlimBattleTrigger : MonoBehaviour
 
     public GameObject FightTrigger; // Weakness Ball Trigger
     public GameObject enterBattleTrigger;
+    public GameObject WeaknessBall;
 
     public float rotationSpeedX = 30f;
     public float rotationSpeedZ = 30f;
@@ -35,6 +36,7 @@ public class SlimBattleTrigger : MonoBehaviour
         FindObjectOfType<CombatMode>().EnterCombatMode();
         Debug.Log("Battle Started!");
         enterBattleTrigger.SetActive(false); // Hide entry trigger
+        WeaknessBall.SetActive(true);
     }
 
     public void EndBattle()

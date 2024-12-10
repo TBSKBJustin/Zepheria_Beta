@@ -242,6 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FightTrigger: {fileID: 1966965835}
   enterBattleTrigger: {fileID: 7865685}
+  WeaknessBall: {fileID: 322988861}
   rotationSpeedX: 30
   rotationSpeedZ: 30
 --- !u!1 &11315531
@@ -4426,7 +4427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25e04487cce948344be24d767a162caf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slimeController: {fileID: 0}
+  slimeController: {fileID: 528945270}
 --- !u!1 &334452499
 GameObject:
   m_ObjectHideFlags: 0
