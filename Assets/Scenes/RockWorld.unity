@@ -11560,10 +11560,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49a38d22a1b882c4586a730fd3c9be13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enterBattleTrigger: {fileID: 0}
+  enterBattleTrigger: {fileID: 1477863952}
   rotationSpeedX: 30
   rotationSpeedZ: 30
-  battleMusic: {fileID: 0}
+  battleMusic: {fileID: 8300000, guid: e5c0a404107e36a499343defdada7f4b, type: 3}
   specifiedAudioSource: {fileID: 1360823688}
 --- !u!65 &1477863954
 BoxCollider:
