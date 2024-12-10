@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class SlimeBehavior : MonoBehaviour
 {
-    public float detectionRadius = 5f; // Distance within which the slime stops bouncing
     public float bounceHeight = 0.5f;  // Height of each bounce
     public float bounceSpeed = 2f;     // Speed of bounce
     public AudioClip bounceSound;      // Sound to play during bouncing
-    public Camera mainCamera;          // Assign this in the Inspector to track the player鈥檚 camera
+    public AudioClip deathSound;
+    public GameObject Triggers;
 
     private Vector3 originalPosition;
     private AudioSource audioSource;
-    private bool isNearPlayer = false; // Whether the player is within range
-    private Coroutine bounceCoroutine; // Reference to the bounce coroutine
+    private Coroutine bounceCoroutine;
+    public bool isDead = false;
 
     void Start()
     {
@@ -25,42 +25,17 @@ public class SlimeBehavior : MonoBehaviour
         audioSource.loop = true;
 
         // Start the bounce coroutine
-        bounceCoroutine = StartCoroutine(Bounce());
-    }
-
-    void Update()
-    {
-        if (mainCamera == null)
-        {
-            Debug.LogWarning("Main Camera is not assigned. Please assign it in the Inspector.");
-            return;
-        }
-
-        // Check if the player is within the detection radius
-        isNearPlayer = Vector3.Distance(transform.position, mainCamera.transform.position) <= detectionRadius;
-
-        if (isNearPlayer)
-        {
-            StopBouncing();
-        }
-        else
-        {
-            StartBouncing();
-        }
+        StartBouncing();
     }
 
     private IEnumerator Bounce()
     {
         while (true)
         {
-            // Calculate the bounce positions
             Vector3 upPosition = new Vector3(originalPosition.x, originalPosition.y + bounceHeight, originalPosition.z);
             Vector3 downPosition = originalPosition;
 
-            // Move to the up position
             yield return MoveToPosition(transform.position, upPosition, 1f / bounceSpeed);
-
-            // Move to the down position
             yield return MoveToPosition(upPosition, downPosition, 1f / bounceSpeed);
         }
     }
@@ -81,7 +56,6 @@ public class SlimeBehavior : MonoBehaviour
 
     private void StartBouncing()
     {
-        // Resume bouncing and play the sound
         if (bounceCoroutine == null)
         {
             bounceCoroutine = StartCoroutine(Bounce());
@@ -95,7 +69,6 @@ public class SlimeBehavior : MonoBehaviour
 
     private void StopBouncing()
     {
-        // Stop bouncing and pause the sound
         if (bounceCoroutine != null)
         {
             StopCoroutine(bounceCoroutine);
@@ -105,6 +78,68 @@ public class SlimeBehavior : MonoBehaviour
         if (audioSource.isPlaying)
         {
             audioSource.Stop();
+            audioSource.clip = deathSound;
+            audioSource.loop = false; // 确保音效只播放一次
+            audioSource.Play();
         }
     }
+
+
+
+    public void OnPlayerHitWeakness(GameObject weaknessBall)
+    {
+        if (isDead) return;
+
+        isDead = true;
+
+        // 让 Weakness Ball 消失
+        if (weaknessBall != null)
+        {
+            Destroy(weaknessBall); // 直接销毁弱点球
+        }
+
+        StopBouncing();
+
+        // 调用玩家的退出战斗模式和增加血量
+        StartCoroutine(ScaleUpAndDestroy());
+    }
+
+    private IEnumerator ScaleUpAndDestroy()
+    {
+        float duration = 1.5f; // 持续时间
+        float elapsedTime = 0f;
+
+        Vector3 originalScale = transform.localScale; // 初始大小
+        Vector3 targetScale = originalScale * 2f;    // 最终大小，放大到 2 倍
+
+        while (elapsedTime < duration)
+        {
+            // 插值计算 scale
+            transform.localScale = Vector3.Lerp(originalScale, targetScale, elapsedTime / duration);
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // 确保到达最终大小后销毁对象
+        transform.localScale = targetScale;
+        if (deathSound != null)
+        {
+            audioSource.clip = deathSound;
+            audioSource.loop = false; // 确保音效只播放一次
+            audioSource.Play();
+        }
+
+        Triggers.SetActive(false);
+        CombatMode playerCombatMode = FindObjectOfType<CombatMode>();
+        if (playerCombatMode != null)
+        {
+            playerCombatMode.ExitCombatMode();
+            playerCombatMode.IncreaseMaxHealth(20); // 玩家血量上限+20
+            playerCombatMode.UpdatePlayerHealthBar();
+        }
+        Destroy(gameObject);
+    }
+
+
 }
