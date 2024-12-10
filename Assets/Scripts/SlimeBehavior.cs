@@ -7,12 +7,15 @@ public class SlimeBehavior : MonoBehaviour
     public float bounceSpeed = 2f;     // Speed of bounce
     public AudioClip bounceSound;      // Sound to play during bouncing
     public AudioClip deathSound;
+    //public AudioClip theDoorSound;
     public GameObject Triggers;
 
     private Vector3 originalPosition;
     private AudioSource audioSource;
     private Coroutine bounceCoroutine;
     public bool isDead = false;
+
+    public GameObject TheDoor;
 
     void Start()
     {
@@ -137,6 +140,12 @@ public class SlimeBehavior : MonoBehaviour
             playerCombatMode.ExitCombatMode();
             playerCombatMode.IncreaseMaxHealth(20); // 玩家血量上限+20
             playerCombatMode.UpdatePlayerHealthBar();
+            //if (playerCombatMode.maxHealth == 105)
+            //{
+            //    TheDoor.SetActive(true);
+            //    audioSource.clip = theDoorSound;
+            //    audioSource.Play();
+            //}
         }
         Destroy(gameObject);
     }

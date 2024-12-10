@@ -27,6 +27,7 @@ public class CombatMode : MonoBehaviour
     public int maxHealth = 100; // 玩家最大血量
     private int currentHealth; // 玩家当前血量
     [SerializeField] private Image playerHealthBar; // 玩家血条 UI
+    public GameObject HealthBarObject;
 
     [Header("Combat Music")]
     public AudioClip combatMusic; // 战斗模式音乐
@@ -70,8 +71,8 @@ public class CombatMode : MonoBehaviour
         rightHandModel.SetActive(true);
         swordModel.SetActive(false);
         rightDirectModel.SetActive(true);
-        rightTeleport.SetActive(true);
-        leftMenu.SetActive(true);
+        //rightTeleport.SetActive(true);
+        //leftMenu.SetActive(true);
         leftMenuButton.SetActive(true);
         leftHand.SetActive(true);
         leftDirect.SetActive(true);
@@ -81,6 +82,9 @@ public class CombatMode : MonoBehaviour
         if (teleportationProvider != null) teleportationProvider.enabled = true;
 
         StartCoroutine(FadeOutMusic());
+
+        currentHealth = maxHealth;
+        UpdatePlayerHealthBar();
 
     }
 
@@ -100,7 +104,7 @@ public class CombatMode : MonoBehaviour
     {
         if (playerHealthBar != null)
         {
-            playerHealthBar.fillAmount = (float)currentHealth / 100; // 根据当前血量更新血条
+            playerHealthBar.fillAmount = (float)currentHealth / 105; // 根据当前血量更新血条
         }
     }
 
@@ -119,7 +123,7 @@ public class CombatMode : MonoBehaviour
 
     private IEnumerator FadeInMusic()
     {
-        float targetVolume = 1f; // 目标音量
+        float targetVolume = 0.5f; // 目标音量
         float duration = 1.5f; // 渐入持续时间
         float elapsedTime = 0f;
 
