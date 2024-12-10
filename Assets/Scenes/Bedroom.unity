@@ -97,7 +97,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: daa19e64cf3625947bf04b8831f1ed6c, type: 2}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 1a088fde75aeca445ba75b6369b4659c, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 4c5d98dca1ae50449b1044480909c726, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -875,7 +875,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1208035809094850, guid: 568da07845320fd45b7c66635bf12799, type: 3}
       propertyPath: m_Name
-      value: Door_3_Milk
+      value: BDoor
       objectReference: {fileID: 0}
     - target: {fileID: 1834071164179734, guid: 568da07845320fd45b7c66635bf12799, type: 3}
       propertyPath: m_IsActive
@@ -5000,18 +5000,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f767254cad5364c73a2f9dff91ca4657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 562184932}
+  player: {fileID: 163677249}
   table: {fileID: 1099142741}
-  activationRange: 3.05
+  activationRange: 3
   scaryVoiceClip: {fileID: 8300000, guid: 087752c193873463c88feee7dc1097b1, type: 3}
   text1: {fileID: 1599282602}
   text2: {fileID: 1520216565}
   text3: {fileID: 197580560}
   text4: {fileID: 45517637}
   fadeInDuration: 1
-  displayDuration: 1.9
+  displayDuration: 1.8
   fadeOutDuration: 1
-  door: {fileID: 0}
+  door: {fileID: 681616406}
 --- !u!1 &390781118
 GameObject:
   m_ObjectHideFlags: 0
@@ -9150,6 +9150,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 665922589}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &681616406 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1208035809094850, guid: 568da07845320fd45b7c66635bf12799, type: 3}
+  m_PrefabInstance: {fileID: 100925460}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &685330449 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 109434732395451487, guid: 65847589f926b734d9eaed6e25f0046b, type: 3}
@@ -20788,7 +20793,7 @@ Transform:
   m_GameObject: {fileID: 1704514340}
   serializedVersion: 2
   m_LocalRotation: {x: 0.6830127, y: -0.18301274, z: 0.18301274, w: 0.6830127}
-  m_LocalPosition: {x: 20.25, y: 2.42, z: 9.5}
+  m_LocalPosition: {x: 15.915, y: 2.42, z: 9.5}
   m_LocalScale: {x: 0.18, y: 0.8, z: 0.00001}
   m_ConstrainProportionsScale: 0
   m_Children: []

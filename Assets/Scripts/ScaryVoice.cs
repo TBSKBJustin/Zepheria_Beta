@@ -28,10 +28,10 @@ public class RoomTrigger : MonoBehaviour
         SetTextAlpha(text3, 0);
         SetTextAlpha(text4, 0);
 
-        // Ensure the door is initially inactive
-        if (door != null)
+        // Ensure the door is initially active unless intentionally hidden
+        if (door == null)
         {
-            door.SetActive(false);
+            Debug.LogError("Door is not assigned in the inspector.");
         }
     }
 
@@ -50,6 +50,7 @@ public class RoomTrigger : MonoBehaviour
         if (distanceToPlayer <= activationRange && !hasTriggered)
         {
             hasTriggered = true;
+            Debug.Log("Triggering scary voice and text sequence.");
             TriggerScaryVoiceAndText();
         }
     }
@@ -57,7 +58,14 @@ public class RoomTrigger : MonoBehaviour
     public void TriggerScaryVoiceAndText()
     {
         // Play the scary voice at the table's position
-        AudioSource.PlayClipAtPoint(scaryVoiceClip, table.position);
+        if (scaryVoiceClip != null)
+        {
+            AudioSource.PlayClipAtPoint(scaryVoiceClip, table.position);
+        }
+        else
+        {
+            Debug.LogError("Scary voice clip is not assigned.");
+        }
 
         // Start displaying text in sequence
         StartCoroutine(ShowTextsSequentially());
@@ -74,12 +82,19 @@ public class RoomTrigger : MonoBehaviour
         // Activate the door after the last text
         if (door != null)
         {
+            Debug.Log("Activating the door.");
             door.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("Door is not assigned or is missing.");
         }
     }
 
     IEnumerator ShowText(TextMeshProUGUI text)
     {
+        if (text == null) yield break;
+
         // Fade in the text
         float elapsedTime = 0f;
         while (elapsedTime < fadeInDuration)
@@ -110,6 +125,8 @@ public class RoomTrigger : MonoBehaviour
 
     void SetTextAlpha(TextMeshProUGUI text, float alpha)
     {
+        if (text == null) return;
+
         Color color = text.color;
         color.a = alpha;
         text.color = color;

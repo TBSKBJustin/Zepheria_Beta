@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,16 +9,9 @@ public class ReadyFightBoss : MonoBehaviour
     public float rotationSpeedX = 30f;
     public float rotationSpeedZ = 30f;
 
-    public AudioClip battleMusic; // ÒôÀÖÆ¬¶Î
-    private AudioSource audioSource; // ÒôÆµ×é¼ş
-    private bool hasTriggered = false; // ·ÀÖ¹ÖØ¸´´¥·¢
-
-    void Start()
-    {
-        // Ìí¼Ó AudioSource ×é¼ş
-        audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.playOnAwake = false; // ²»×Ô¶¯²¥·Å
-    }
+    public AudioClip battleMusic; // éŸ³ä¹ç‰‡æ®µ
+    public AudioSource specifiedAudioSource; // æŒ‡å®šçš„ AudioSource
+    private bool hasTriggered = false; // é˜²æ­¢é‡å¤è§¦å‘
 
     void Update()
     {
@@ -32,7 +25,7 @@ public class ReadyFightBoss : MonoBehaviour
     {
         if (!hasTriggered && other.CompareTag("Player"))
         {
-            hasTriggered = true; // È·±£ÒôÀÖÖ»²¥·ÅÒ»´Î
+            hasTriggered = true; // ç¡®ä¿éŸ³ä¹åªæ’­æ”¾ä¸€æ¬¡
             PlayBattleMusic();
             enterBattleTrigger.SetActive(false);
         }
@@ -40,15 +33,22 @@ public class ReadyFightBoss : MonoBehaviour
 
     void PlayBattleMusic()
     {
-        if (battleMusic != null)
+        if (specifiedAudioSource != null)
         {
-            audioSource.clip = battleMusic;
-            audioSource.Play();
-            Debug.Log("Battle music started!");
+            if (battleMusic != null)
+            {
+                specifiedAudioSource.clip = battleMusic;
+                specifiedAudioSource.Play();
+                Debug.Log("Battle music started on specified AudioSource!");
+            }
+            else
+            {
+                Debug.LogWarning("No battle music assigned!");
+            }
         }
         else
         {
-            Debug.LogWarning("No battle music assigned!");
+            Debug.LogError("No AudioSource assigned! Please assign an AudioSource in the Inspector.");
         }
     }
 }
