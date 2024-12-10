@@ -875,7 +875,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1208035809094850, guid: 568da07845320fd45b7c66635bf12799, type: 3}
       propertyPath: m_Name
-      value: Door_3_Milk
+      value: DoorMilk
       objectReference: {fileID: 0}
     - target: {fileID: 1834071164179734, guid: 568da07845320fd45b7c66635bf12799, type: 3}
       propertyPath: m_IsActive
@@ -5011,7 +5011,7 @@ MonoBehaviour:
   fadeInDuration: 1
   displayDuration: 1.9
   fadeOutDuration: 1
-  door: {fileID: 0}
+  door: {fileID: 711127528}
 --- !u!1 &390781118
 GameObject:
   m_ObjectHideFlags: 0
@@ -9422,6 +9422,11 @@ Transform:
   - {fileID: 1701788592}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!1 &711127528 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1208035809094850, guid: 568da07845320fd45b7c66635bf12799, type: 3}
+  m_PrefabInstance: {fileID: 100925460}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &716528699
 GameObject:
   m_ObjectHideFlags: 0
