@@ -9146,10 +9146,7 @@ MonoBehaviour:
   messageText: {fileID: 730140428}
   promptsFile: {fileID: 4900000, guid: 8265c7075906eae40ac1676f13cdf412, type: 3}
   audioSource: {fileID: 1148925083}
-  mushroomSounds:
-  - {fileID: 8300000, guid: 0552a8c9a0f408c4d8a4f824d7dbf0d8, type: 3}
-  - {fileID: 8300000, guid: c8befd49c063dd443a423cc2792876e4, type: 3}
-  - {fileID: 8300000, guid: de97f9812d4514742a9c42becd0b7071, type: 3}
+  mushroomSounds: []
   messageHeightOffset: 0.8
   messageDurations:
   - 5

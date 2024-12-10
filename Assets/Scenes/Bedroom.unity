@@ -2549,6 +2549,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetSceneName: ForestWorld
+  audioClip1: {fileID: 0}
+  audioClip2: {fileID: 0}
 --- !u!65 &194102683
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7425,6 +7427,8 @@ MonoBehaviour:
     m_Reference: {fileID: 0}
   maxHealth: 100
   playerHealthBar: {fileID: 743959868}
+  HealthBarObject: {fileID: 0}
+  combatMusic: {fileID: 0}
 --- !u!54 &562184934
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -19807,6 +19811,7 @@ MonoBehaviour:
   snapDistance: 0.5
   flashInterval: 0.5
   respawnSound: {fileID: 8300000, guid: a5e2476dabb54af44bc32ac88e211f2c, type: 3}
+  snapSound: {fileID: 8300000, guid: 6fb70b5563fd46f4082ea416e192d72e, type: 3}
   respawnObject: {fileID: 974915460}
 --- !u!1 &1599282601
 GameObject:

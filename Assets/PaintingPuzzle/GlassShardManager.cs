@@ -43,6 +43,7 @@ public class GlassPaneManager : MonoBehaviour
     private Coroutine flashObject2Coroutine;
 
     public AudioClip respawnSound; // The sound to play when respawning the object
+    public AudioClip snapSound; // Separate audio clip for snapping a shard
     public GameObject respawnObject; // The object to despawn and respawn
     private AudioSource audioSource; // The AudioSource for playing the sound
 
@@ -243,6 +244,13 @@ public class GlassPaneManager : MonoBehaviour
         }
 
         Debug.Log($"Shard {shardSlot.shard.name} snapped into position and is now permanent.");
+
+        // Play audio clip when a shard is snapped
+        if (audioSource != null && respawnSound != null)
+        {
+            audioSource.PlayOneShot(snapSound);
+            Debug.Log("Shard snapped audio played.");
+        }
     }
 
 
