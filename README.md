@@ -18,4 +18,3 @@ Please notify other teammates when you start editing
 7. Write a short summary then Commit (This will update the local files)
 8. Click Upload origin to upload it to the cloud (This will sync the local to the cloud)
     ![Commit](https://github.com/TBSKBJustin/Zepheria_Beta/blob/Experiment/GitHubResource/Push%20Origin.png)
- 

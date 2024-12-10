@@ -4,5 +4,22 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
-  m_configObjects: {}
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/StartScene.unity
+    guid: 373c31486252d5943b034bee1c6da385
+  - enabled: 1
+    path: Assets/Scenes/Bedroom.unity
+    guid: eae9938c67dbd49e1b7d5456333d5f05
+  - enabled: 1
+    path: Assets/Scenes/ForestWorld.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/RockWorld.unity
+    guid: f5df066651aa3b5478b903b7093e98f9
+  - enabled: 0
+    path: Assets/Scenes/TestScene.unity
+    guid: c15d95f795e95974cada67a333d6cc75
+  m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 49aeecbb3b5d54d4fa6dc4cc9025052b, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: d8e8f1c05ac7934498124d69963ef46f, type: 2}
